@@ -5,7 +5,9 @@ import no.nav.aap.søknadkonsument.søknad.model.UtenlandsSøknadKafka
 import no.nav.aap.søknadkonsument.util.LoggerUtil
 import org.apache.kafka.clients.consumer.ConsumerRecord
 import org.springframework.kafka.annotation.KafkaListener
+import org.springframework.stereotype.Component
 
+@Component
 class KafkaSøknadKonsument(val joark: JoarkClient) {
     private val log = LoggerUtil.getLogger(javaClass)
     var value: UtenlandsSøknadKafka? = null
