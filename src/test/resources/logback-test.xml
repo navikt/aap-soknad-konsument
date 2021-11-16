@@ -10,6 +10,7 @@
             <appender-ref ref="stdout"/>
         </logger>
         <logger name="no.nav.aap" level="trace" />
+    <logger name="org.springframework.kafka" level="trace" />
     <root level="info">
         <appender-ref ref="stdout" />
     </root>
