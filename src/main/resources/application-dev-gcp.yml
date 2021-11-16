@@ -17,4 +17,4 @@ no.nav:
 mvc:
   log-request-details : true
 joark:
-  uri: https://aap-fss-proxy.dev-fss-pub.nais.io/joark/aad
+  base-uri: https://aap-fss-proxy.dev-fss-pub.nais.io/joark

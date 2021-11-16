@@ -12,7 +12,7 @@
     <artifactId>konsument</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>aap-soknad-api</name>
-    <description>aap-soknad-api</description>
+    <description>aap-soknad-konsument</description>
     <properties>
         <conditionals.version>2.0.13</conditionals.version>
         <i18n.version>1.29</i18n.version>
