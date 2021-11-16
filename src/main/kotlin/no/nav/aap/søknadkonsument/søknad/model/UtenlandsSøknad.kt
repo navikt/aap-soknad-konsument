@@ -1,3 +1,4 @@
+
 package no.nav.aap.søknadkonsument.søknad.model
 
 import com.neovisionaries.i18n.CountryCode
