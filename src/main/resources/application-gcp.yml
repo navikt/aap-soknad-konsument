@@ -14,7 +14,7 @@ spring:
     properties:
       endpoint:
         identification:
-           algorithm: ''
+           algorithm:
     security:
        protocol: SSL
     ssl:
@@ -29,6 +29,15 @@ spring:
       client-id: ${spring.application.name}
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    consumer:
+      properties:
+        spring:
+          json:
+            trusted:
+              packages: no.nav.aap.søknadkonsument.søknad.model
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      group-id: utland
 no.nav:
   security:
     jwt:
