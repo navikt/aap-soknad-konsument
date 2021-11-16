@@ -11,7 +11,7 @@ no.nav:
     jwt:
       client:
         registration:
-          pdl-api:
+          aap-fss-proxy:
             token-exchange:
               audience: dev-fss:aap:aap-fss-proxy
 mvc:
