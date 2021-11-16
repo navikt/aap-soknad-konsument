@@ -4,7 +4,7 @@ metadata:
   annotations:
     nais.io/read-only-file-system: "false"
     nais.io/run-as-user: "1001"
-  name: aap-soknad-api
+  name: aap-soknad-konsument
   namespace: aap
   labels:
     team: aap
@@ -12,7 +12,7 @@ spec:
   accessPolicy:
     inbound:
       rules:
-        - application: aap-soknad
+        - application: aap-soknad-api
   tokenx:
     enabled: true
   kafka:

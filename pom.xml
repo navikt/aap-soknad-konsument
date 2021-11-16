@@ -8,17 +8,16 @@
         <version>2.5.6</version>
         <relativePath/>
     </parent>
-    <groupId>no.nav.aap.api</groupId>
-    <artifactId>soknad</artifactId>
+    <groupId>no.nav.aap.soknad</groupId>
+    <artifactId>konsument</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>aap-soknad-api</name>
     <description>aap-soknad-api</description>
     <properties>
         <conditionals.version>2.0.13</conditionals.version>
-        <graphql.version>1.0.0</graphql.version>
         <i18n.version>1.29</i18n.version>
-        <java.version>16</java.version>
-        <kotlin.version>1.5.31</kotlin.version>
+        <java.version>17</java.version>
+        <kotlin.version>1.6.0</kotlin.version>
         <logstash.version>6.6</logstash.version>
         <mock-oauth2-server.version>0.3.6</mock-oauth2-server.version>
         <okhttp3.version>4.9.1</okhttp3.version>
@@ -67,17 +66,16 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webflux</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
         <dependency>
             <groupId>org.projectreactor</groupId>
             <artifactId>reactor-spring</artifactId>
             <version>${reactor.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.graphql-java-kickstart</groupId>
-            <artifactId>graphql-webclient-spring-boot-starter</artifactId>
-            <version>${graphql.version}</version>
         </dependency>
         <dependency>
             <groupId>org.hibernate.validator</groupId>
@@ -201,7 +199,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>no.nav.aap.api.AAPSøknadApiApplication</mainClass>
+                    <mainClass>no.nav.aap.søknadkonsument.AAPSøknadKonsumentApplication</mainClass>
                 </configuration>
             </plugin>
             <plugin>

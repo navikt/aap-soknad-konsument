@@ -34,7 +34,7 @@ no.nav:
     jwt:
       client:
         registration:
-          pdl-api:
+          aap-fss-proxy:
             well-known-url: ${token.x.well.known.url}
             grant-type: urn:ietf:params:oauth:grant-type:token-exchange
             authentication:
@@ -45,5 +45,3 @@ no.nav:
         idporten:
           discovery-url: ${token.x.well.known.url}
           accepted-audience: ${token.x.client.id}
-utenlands:
-  topic: aap.aap-utland-soknad-sendt.v1

@@ -1,6 +1,6 @@
 spring:
   application:
-    name: "aap-soknad-api"
+    name: "aap-soknad-konsument"
   main:
     banner-mode: off
   jackson:

@@ -13,8 +13,8 @@ no.nav:
         registration:
           pdl-api:
             token-exchange:
-              audience: dev-fss:pdl:pdl-api
+              audience: dev-fss:aap:aap-fss-proxy
 mvc:
   log-request-details : true
-pdl:
-  base-uri: https://pdl-api.dev-fss-pub.nais.io/graphql
+joark:
+  uri: https://aap-fss-proxy.dev-fss-pub.nais.io/joark/aad
