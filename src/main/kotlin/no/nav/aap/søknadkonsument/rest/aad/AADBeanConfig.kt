@@ -12,7 +12,7 @@ class AADBeanConfig {
     @Bean
     fun configMatcher() = object : AADConfigMatcher {
         override fun findProperties(configs: ClientConfigurationProperties, uri: URI): ClientProperties? {
-            return configs.registration["onbehalfof"]
+            return configs.registration["clientcredentials"]
         }
     }
 }

@@ -44,11 +44,11 @@ no.nav:
     jwt:
       client:
         registration:
-          onbehalfof:
-              token-endpoint-url: https://login.microsoftonline.com/${azure.app.tenant.id}/oauth2/v2.0/token
-              grant-type: urn:ietf:params:oauth:grant-type:jwt-bearer
-              scope: https://graph.microsoft.com/.default
+          clientcredentials:
+            token-endpoint-url: ${AZURE_OPENID_CONFIG_TOKEN_ENDPOINT}
+              grant-type: client_credentials
+              scope: api://${AZURE_APP_CLIENT_ID}/.default
               authentication:
-                client-id: ${azure.app.client.id}
-                client-secret: ${azure.app.client.secret}
-                client-auth-method: client_secret_basic
+                client-id: ${AZURE_APP_CLIENT_ID}
+                client-jwk: ${AZURE_APP_JWK}
+                client-auth-method: private_key_jwt
