@@ -13,8 +13,10 @@ spec:
     inbound:
       rules:
         - application: aap-soknad-api
-  tokenx:
-    enabled: true
+  azure:
+    application:
+      enabled: true
+      tenant: {{tenant}}
   kafka:
     pool: {{kafka-pool}}
   port: 8080

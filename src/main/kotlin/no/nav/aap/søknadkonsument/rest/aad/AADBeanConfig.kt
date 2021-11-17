@@ -1,4 +1,4 @@
-package no.nav.aap.søknadkonsument.rest.tokenx
+package no.nav.aap.søknadkonsument.rest.aad
 
 import no.nav.security.token.support.client.core.ClientProperties
 import no.nav.security.token.support.client.spring.ClientConfigurationProperties
@@ -8,9 +8,9 @@ import java.net.URI
 
 
 @Configuration
-class TokenXBeanConfig {
+class AADBeanConfig {
     @Bean
-    fun configMatcher() = object : TokenXConfigMatcher {
+    fun configMatcher() = object : AADConfigMatcher {
         override fun findProperties(configs: ClientConfigurationProperties, uri: URI): ClientProperties? {
             return configs.registration[uri.host.split("\\.".toRegex()).toTypedArray()[0]]
         }

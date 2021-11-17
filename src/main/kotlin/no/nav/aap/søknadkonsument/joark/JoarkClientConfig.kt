@@ -3,7 +3,7 @@ package no.nav.aap.søknadkonsument.joark
 import no.nav.aap.søknadkonsument.config.Constants.JOARK
 import no.nav.aap.søknadkonsument.rest.AbstractRestConfig.Companion.correlatingFilterFunction
 import no.nav.aap.søknadkonsument.rest.AbstractRestConfig.Companion.temaFilterFunction
-import no.nav.aap.søknadkonsument.rest.tokenx.TokenXFilterFunction
+import no.nav.aap.søknadkonsument.rest.aad.AADFilterFunction
 import no.nav.boot.conditionals.EnvUtil.isDevOrLocal
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.context.annotation.Bean
@@ -17,13 +17,13 @@ import reactor.netty.http.client.HttpClient
 class JoarkClientConfig  {
     @Qualifier(JOARK)
     @Bean
-    fun webClientJoark(builder: WebClient.Builder, cfg: JoarkConfig, tokenXFilterFunction: TokenXFilterFunction, env: Environment): WebClient {
+    fun webClientJoark(builder: WebClient.Builder, cfg: JoarkConfig, aadFilterFunction: AADFilterFunction, env: Environment): WebClient {
         return builder
             .clientConnector(ReactorClientHttpConnector(HttpClient.create().wiretap(isDevOrLocal(env))))
             .baseUrl(cfg.baseUri.toString())
             .filter(correlatingFilterFunction())
             .filter(temaFilterFunction())
-            .filter(tokenXFilterFunction)
+            .filter(aadFilterFunction)
             .build()
     }
 }

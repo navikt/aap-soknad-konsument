@@ -1,4 +1,4 @@
-package no.nav.aap.søknadkonsument.rest.tokenx
+package no.nav.aap.søknadkonsument.rest.aad
 
 import no.nav.aap.søknadkonsument.util.AuthContext
 import no.nav.aap.søknadkonsument.util.AuthContext.Companion.bearerToken
@@ -15,10 +15,10 @@ import org.springframework.web.reactive.function.client.ExchangeFilterFunction
 import org.springframework.web.reactive.function.client.ExchangeFunction
 import reactor.core.publisher.Mono
 @Component
-class TokenXFilterFunction internal constructor(
+class AADFilterFunction internal constructor(
     private val configs: ClientConfigurationProperties,
     private val service: OAuth2AccessTokenService,
-    private val matcher: TokenXConfigMatcher,
+    private val matcher: AADConfigMatcher,
     private val authContext: AuthContext) : ExchangeFilterFunction {
 
     private val log = getLogger(javaClass)
