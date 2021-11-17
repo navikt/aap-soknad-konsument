@@ -10,6 +10,10 @@ import no.nav.security.token.support.core.context.TokenValidationContext
 import no.nav.security.token.support.spring.SpringTokenValidationContextHolder
 import org.springframework.http.HttpHeaders.AUTHORIZATION
 import org.springframework.stereotype.Component
+import org.springframework.web.context.request.NativeWebRequest
+import org.springframework.web.context.request.RequestContextHolder
+import org.springframework.web.context.request.ServletWebRequest
+import org.springframework.web.context.request.async.StandardServletAsyncWebRequest
 import org.springframework.web.reactive.function.client.ClientRequest
 import org.springframework.web.reactive.function.client.ClientResponse
 import org.springframework.web.reactive.function.client.ExchangeFilterFunction
@@ -28,8 +32,8 @@ class AADFilterFunction internal constructor(
         log.trace("Sjekker token exchange for {}", url)
         val cfg = matcher.findProperties(configs, url)
         if (cfg != null) {
-            SpringTokenValidationContextHolder().setTokenValidationContext(
-                 TokenValidationContext (emptyMap()))
+            RequestContextHolder.setRequestAttributes(StandardServletAsyncWebRequest(null,null))
+            SpringTokenValidationContextHolder().setTokenValidationContext(TokenValidationContext (emptyMap()))
             log.trace(CONFIDENTIAL, "Gjør token exchange for {} med konfig {}", url, cfg)
             val token = service.getAccessToken(cfg).accessToken
             log.trace("Token exchange for {} OK", url)
