@@ -1,6 +1,5 @@
 package no.nav.aap.søknadkonsument.rest.aad
 
-import no.nav.aap.søknadkonsument.util.AuthContext
 import no.nav.aap.søknadkonsument.util.AuthContext.Companion.bearerToken
 import no.nav.aap.søknadkonsument.util.LoggerUtil.getLogger
 import no.nav.aap.søknadkonsument.util.LoggerUtil.getSecureLogger
@@ -18,8 +17,7 @@ import reactor.core.publisher.Mono
 class AADFilterFunction internal constructor(
     private val configs: ClientConfigurationProperties,
     private val service: OAuth2AccessTokenService,
-    private val matcher: AADConfigMatcher,
-    private val authContext: AuthContext) : ExchangeFilterFunction {
+    private val matcher: AADConfigMatcher) : ExchangeFilterFunction {
 
     private val log = getLogger(javaClass)
     private val secureLog = getSecureLogger();
@@ -27,7 +25,7 @@ class AADFilterFunction internal constructor(
         val url = req.url()
         log.trace("Sjekker token exchange for {}", url)
         val cfg = matcher.findProperties(configs, url)
-        if (cfg != null && authContext.isAuthenticated()) {
+        if (cfg != null) {
             log.trace(CONFIDENTIAL, "Gjør token exchange for {} med konfig {}", url, cfg)
             val token = service.getAccessToken(cfg).accessToken
             log.trace("Token exchange for {} OK", url)
@@ -39,5 +37,5 @@ class AADFilterFunction internal constructor(
         return next.exchange(ClientRequest.from(req).build())
     }
 
-    override fun toString() = "${javaClass.simpleName} [[configs=$configs,authContext=$authContext,service=$service,matcher=$matcher]"
+    override fun toString() = "${javaClass.simpleName} [[configs=$configs,service=$service,matcher=$matcher]"
 }
