@@ -6,6 +6,8 @@ import no.nav.aap.søknadkonsument.util.LoggerUtil.getSecureLogger
 import no.nav.boot.conditionals.EnvUtil.CONFIDENTIAL
 import no.nav.security.token.support.client.core.oauth2.OAuth2AccessTokenService
 import no.nav.security.token.support.client.spring.ClientConfigurationProperties
+import no.nav.security.token.support.core.context.TokenValidationContext
+import no.nav.security.token.support.spring.SpringTokenValidationContextHolder
 import org.springframework.http.HttpHeaders.AUTHORIZATION
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.client.ClientRequest
@@ -26,6 +28,8 @@ class AADFilterFunction internal constructor(
         log.trace("Sjekker token exchange for {}", url)
         val cfg = matcher.findProperties(configs, url)
         if (cfg != null) {
+            SpringTokenValidationContextHolder().setTokenValidationContext(
+                 TokenValidationContext (emptyMap()))
             log.trace(CONFIDENTIAL, "Gjør token exchange for {} med konfig {}", url, cfg)
             val token = service.getAccessToken(cfg).accessToken
             log.trace("Token exchange for {} OK", url)
