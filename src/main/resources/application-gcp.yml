@@ -45,7 +45,7 @@ no.nav:
       client:
         registration:
           clientcredentials:
-            token-endpoint-url: ${AZURE_OPENID_CONFIG_TOKEN_ENDPOINT}
+            token-endpoint-url: https://login.microsoftonline.com/${AZURE_APP_TENANT_ID}/oauth2/v2.0/token
               grant-type: client_credentials
               scope: api://${AZURE_APP_CLIENT_ID}/.default
               authentication:
