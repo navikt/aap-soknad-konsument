@@ -2,6 +2,7 @@ package no.nav.aap.søknadkonsument.rest
 
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.KotlinModule
+import no.nav.aap.søknadkonsument.rest.aad.OIDCResponseModule
 import no.nav.boot.conditionals.ConditionalOnDevOrLocal
 import org.springframework.boot.actuate.trace.http.HttpTraceRepository
 import org.springframework.boot.actuate.trace.http.InMemoryHttpTraceRepository
@@ -17,7 +18,7 @@ class ellesRestBeanConfig {
     @Bean
     fun customizer(): Jackson2ObjectMapperBuilderCustomizer {
         return Jackson2ObjectMapperBuilderCustomizer { b: Jackson2ObjectMapperBuilder ->
-            b.modules(ProblemModule(), JavaTimeModule(), KotlinModule())
+            b.modules(ProblemModule(), JavaTimeModule(), OIDCResponseModule(),KotlinModule())
         }
     }
     @Bean
