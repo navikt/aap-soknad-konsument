@@ -46,7 +46,7 @@ no.nav:
         registration:
           onbehalfof:
             token-endpoint-url: https://login.microsoftonline.com/${azure.app.tenant.id}/oauth2/v2.0/token
-              grant-type: urn:ietf:params:oauth:grant-type:jwt-bearer
+              grant-type: "urn:ietf:params:oauth:grant-type:jwt-bearer"
               scope: https://graph.microsoft.com/.default
               authentication:
                 client-id: ${azure.app.client.id}
