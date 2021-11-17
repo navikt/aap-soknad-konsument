@@ -1,5 +1,5 @@
 
-package no.nav.aap.søknadkonsument.søknad.model
+package no.nav.aap.api.søknad.model.UtenlandsSøknadKafka
 
 import com.neovisionaries.i18n.CountryCode
 import no.nav.aap.søknadkonsument.felles.Periode

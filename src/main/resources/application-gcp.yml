@@ -34,7 +34,7 @@ spring:
         spring:
           json:
             trusted:
-              packages: no.nav.aap.søknadkonsument.søknad.model
+              packages: no.nav.aap.api.søknad.model.UtenlandsSøknadKafka
       auto-offset-reset: earliest
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
