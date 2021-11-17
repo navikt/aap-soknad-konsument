@@ -1,6 +1,6 @@
 package no.nav.aap.søknadkonsument.søknad
 
-import no.nav.aap.api.søknad.model.UtenlandsSøknadKafka.UtenlandsSøknadKafka
+import no.nav.aap.api.søknad.model.UtenlandsSøknadKafka
 import no.nav.aap.søknadkonsument.joark.JoarkClient
 import no.nav.aap.søknadkonsument.util.LoggerUtil
 import org.apache.kafka.clients.consumer.ConsumerRecord
