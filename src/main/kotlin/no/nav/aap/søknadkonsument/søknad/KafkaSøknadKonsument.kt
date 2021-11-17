@@ -12,7 +12,7 @@ class KafkaSøknadKonsument(val joark: JoarkClient) {
     private val log = LoggerUtil.getLogger(javaClass)
     var value: UtenlandsSøknadKafka? = null
 
-    @KafkaListener(topics = ["#{'\${utenlands.topic:aap.aap-utland-soknad-sendt.v1}'}"],  groupId = "#{'\${kafka.consumer.group-id}'}")
+    @KafkaListener(topics = ["#{'\${utenlands.topic:aap.aap-utland-soknad-sendt.v1}'}"],  groupId = "#{'\${spring.kafka.consumer.group-id}'}")
     fun konsumer(consumerRecord: ConsumerRecord<String, UtenlandsSøknadKafka>) {
         value = consumerRecord.value()
         log.info("WOHOO, fikk søknad $value")
