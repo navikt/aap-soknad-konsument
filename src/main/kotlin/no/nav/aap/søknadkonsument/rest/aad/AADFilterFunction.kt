@@ -26,7 +26,7 @@ class AADFilterFunction internal constructor(
     private val log = getLogger(javaClass)
     private val secureLog = getSecureLogger();
     override fun filter(req: ClientRequest, next: ExchangeFunction): Mono<ClientResponse> {
-        RequestContextHolder.setRequestAttributes(KafkaRequestScopeAttributes())
+        //RequestContextHolder.setRequestAttributes(KafkaRequestScopeAttributes())
         val url = req.url()
         log.trace("Sjekker token exchange for {}", url)
         val cfg = matcher.findProperties(configs, url)
@@ -39,7 +39,7 @@ class AADFilterFunction internal constructor(
             )
         }
         log.trace("Ingen token exchange for {}", url)
-        RequestContextHolder.resetRequestAttributes();
+        //RequestContextHolder.resetRequestAttributes();
         return next.exchange(ClientRequest.from(req).build())
     }
 
