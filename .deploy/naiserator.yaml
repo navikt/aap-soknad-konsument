@@ -10,9 +10,9 @@ metadata:
     team: aap
 spec:
   accessPolicy:
-    inbound:
+    outbound:
       rules:
-        - application: aap-soknad-api
+        - application: aap-pdfgen
   azure:
     application:
       enabled: true
