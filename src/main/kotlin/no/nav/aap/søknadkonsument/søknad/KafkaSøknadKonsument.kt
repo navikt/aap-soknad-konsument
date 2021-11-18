@@ -20,7 +20,7 @@ class KafkaSøknadKonsument(val joark: JoarkClient) {
         value = consumerRecord.value()
         val key = consumerRecord.key();
         log.info("WOHOO, fikk søknad $value")
-        val id = joark.opprettJournalpost(Journalpost(tema = "AAP", behandlingstema = "AAP", tittel="jalla", avsenderMottaker = AvsenderMottaker(key,navn="Gurba"), bruker = Bruker(key)))
+        val id = joark.opprettJournalpost(Journalpost(dokumenter = listOf(),tema = "AAP", behandlingstema = "AAP", tittel="jalla", avsenderMottaker = AvsenderMottaker(key,navn="Gurba"), bruker = Bruker(key)))
         log.info("WOHOO, fikk arkivert $id")
     }
 }
