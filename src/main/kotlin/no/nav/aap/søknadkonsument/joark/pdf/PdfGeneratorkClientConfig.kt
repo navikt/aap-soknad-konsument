@@ -15,7 +15,7 @@ import reactor.netty.http.client.HttpClient
 class PdfGeneratorkClientConfig  {
     @Qualifier(PDFGEN)
     @Bean
-    fun webClientJoark(builder: WebClient.Builder, cfg: PDFGeneratorConfig, env: Environment): WebClient {
+    fun webClientPdfGen(builder: WebClient.Builder, cfg: PDFGeneratorConfig, env: Environment): WebClient {
         return builder
             .clientConnector(ReactorClientHttpConnector(HttpClient.create().wiretap(isDevOrLocal(env))))
             .baseUrl(cfg.baseUri.toString())
