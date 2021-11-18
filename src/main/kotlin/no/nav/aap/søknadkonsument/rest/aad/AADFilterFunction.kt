@@ -9,7 +9,6 @@ import no.nav.security.token.support.client.spring.ClientConfigurationProperties
 import org.springframework.http.HttpHeaders.AUTHORIZATION
 import org.springframework.stereotype.Component
 import org.springframework.web.context.request.RequestAttributes
-import org.springframework.web.context.request.RequestContextHolder
 import org.springframework.web.reactive.function.client.ClientRequest
 import org.springframework.web.reactive.function.client.ClientResponse
 import org.springframework.web.reactive.function.client.ExchangeFilterFunction
