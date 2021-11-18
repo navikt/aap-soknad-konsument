@@ -17,7 +17,7 @@ class PDFGeneratorAdapter(@Qualifier(PDFGEN) client: WebClient, val cf: PDFGener
     private val log = LoggerUtil.getLogger(javaClass)
 
     fun  generate(søknad: UtenlandsSøknadKafka) : ByteArray {
-        log.debug("Creating PDF from $søknad via ")
+        log.debug("Creating PDF from $søknad via ${cf.baseUri}")
         return webClient.post()
             .uri { it.path(cf.path).build() }
             .contentType(APPLICATION_JSON)
