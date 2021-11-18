@@ -22,6 +22,6 @@ class KafkaSøknadKonsument(val joark: JoarkClient) {
     }
 
     private fun docs(): List<Dokument> {
-        return listOf(Dokument("a","b", listOf()))
+        return listOf(Dokument("a","b", listOf(DokumentVariant("a","b","c"))))
     }
 }
