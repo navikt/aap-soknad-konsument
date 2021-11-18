@@ -2,22 +2,23 @@ package no.nav.aap.søknadkonsument.søknad
 
 import no.nav.aap.api.søknad.model.UtenlandsSøknadKafka
 import no.nav.aap.søknadkonsument.joark.*
+import no.nav.aap.søknadkonsument.joark.pdf.PDFGenerator
 import no.nav.aap.søknadkonsument.util.LoggerUtil
 import org.apache.kafka.clients.consumer.ConsumerRecord
 import org.springframework.kafka.annotation.KafkaListener
 import org.springframework.stereotype.Component
+import java.util.*
 
 @Component
-class KafkaSøknadKonsument(val joark: JoarkClient) {
+class KafkaSøknadKonsument(val joark: JoarkClient, val pdfGen: PDFGenerator) {
     private val log = LoggerUtil.getLogger(javaClass)
-    var value: UtenlandsSøknadKafka? = null
 
     @KafkaListener(topics = ["#{'\${utenlands.topic:aap.aap-utland-soknad-sendt.v1}'}"],  groupId = "#{'\${spring.kafka.consumer.group-id}'}")
     fun konsumer(consumerRecord: ConsumerRecord<String, UtenlandsSøknadKafka>) {
-        value = consumerRecord.value()
-        val key = consumerRecord.key();
-        log.trace("WOHOO, fikk søknad $value")
-        val id = joark.opprettJournalpost(Journalpost(tilleggsopplysninger = tillegg(), dokumenter = docs(),tema = "AAP", behandlingstema = "AAP", tittel="jalla", avsenderMottaker = AvsenderMottaker(key,navn="Gurba"), bruker = Bruker(key)))
+        val søknad = consumerRecord.value()
+        val fnr = consumerRecord.key();
+        log.trace("WOHOO, fikk søknad $søknad")
+        val id = joark.opprettJournalpost(Journalpost(tilleggsopplysninger = tillegg(), dokumenter = docs(søknad),tema = "AAP", tittel="jalla", avsenderMottaker = AvsenderMottaker(fnr,navn="Gurba"), bruker = Bruker(fnr)))
         log.info("WOHOO, fikk arkivert $id")
     }
 
@@ -25,7 +26,12 @@ class KafkaSøknadKonsument(val joark: JoarkClient) {
        return listOf(Tilleggsopplysning("a","b"))
     }
 
-    private fun docs(): List<Dokument> {
-        return listOf(Dokument("a","b", listOf(DokumentVariant("a","b","c"))))
+    private fun docs(søknad: UtenlandsSøknadKafka): List<Dokument> {
+        return listOf(Dokument("a","b", listOf(
+            DokumentVariant(
+                "a",
+                Base64.getEncoder().encodeToString(pdfGen.generate(søknad)),
+                "c"
+            ))))
     }
 }
