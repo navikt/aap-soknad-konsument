@@ -2,7 +2,7 @@ package no.nav.aap.søknadkonsument.søknad
 
 import no.nav.aap.api.søknad.model.UtenlandsSøknadKafka
 import no.nav.aap.søknadkonsument.joark.*
-import no.nav.aap.søknadkonsument.joark.pdf.PDFGenerator
+import no.nav.aap.søknadkonsument.joark.pdf.PDFGeneratorClient
 import no.nav.aap.søknadkonsument.util.LoggerUtil
 import org.apache.kafka.clients.consumer.ConsumerRecord
 import org.springframework.kafka.annotation.KafkaListener
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component
 import java.util.*
 
 @Component
-class KafkaSøknadKonsument(val joark: JoarkClient, val pdfGen: PDFGenerator) {
+class KafkaSøknadKonsument(val joark: JoarkClient, val pdfGen: PDFGeneratorClient) {
     private val log = LoggerUtil.getLogger(javaClass)
 
     @KafkaListener(topics = ["#{'\${utenlands.topic:aap.aap-utland-soknad-sendt.v1}'}"],  groupId = "#{'\${spring.kafka.consumer.group-id}'}")
