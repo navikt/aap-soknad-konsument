@@ -1,10 +1,7 @@
 package no.nav.aap.søknadkonsument.søknad
 
 import no.nav.aap.api.søknad.model.UtenlandsSøknadKafka
-import no.nav.aap.søknadkonsument.joark.AvsenderMottaker
-import no.nav.aap.søknadkonsument.joark.Bruker
-import no.nav.aap.søknadkonsument.joark.JoarkClient
-import no.nav.aap.søknadkonsument.joark.Journalpost
+import no.nav.aap.søknadkonsument.joark.*
 import no.nav.aap.søknadkonsument.util.LoggerUtil
 import org.apache.kafka.clients.consumer.ConsumerRecord
 import org.springframework.kafka.annotation.KafkaListener
@@ -20,7 +17,11 @@ class KafkaSøknadKonsument(val joark: JoarkClient) {
         value = consumerRecord.value()
         val key = consumerRecord.key();
         log.info("WOHOO, fikk søknad $value")
-        val id = joark.opprettJournalpost(Journalpost(dokumenter = listOf(),tema = "AAP", behandlingstema = "AAP", tittel="jalla", avsenderMottaker = AvsenderMottaker(key,navn="Gurba"), bruker = Bruker(key)))
+        val id = joark.opprettJournalpost(Journalpost(dokumenter = docs(),tema = "AAP", behandlingstema = "AAP", tittel="jalla", avsenderMottaker = AvsenderMottaker(key,navn="Gurba"), bruker = Bruker(key)))
         log.info("WOHOO, fikk arkivert $id")
+    }
+
+    private fun docs(): List<Dokument> {
+        return listOf(Dokument("a","b", listOf()))
     }
 }
