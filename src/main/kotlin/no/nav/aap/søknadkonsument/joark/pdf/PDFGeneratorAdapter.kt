@@ -18,7 +18,7 @@ class PDFGeneratorAdapter(@Qualifier(PDFGEN) client: WebClient, val cf: PDFGener
 
     fun  generate(søknad: UtenlandsSøknadKafka) : ByteArray {
         log.debug("Creating PDF from $søknad via ${cf.baseUri}")
-        return webClient.post()
+        var bytes = webClient.post()
             .uri { it.path(cf.path).build() }
             .contentType(APPLICATION_JSON)
             .bodyValue(søknad)
@@ -26,6 +26,7 @@ class PDFGeneratorAdapter(@Qualifier(PDFGEN) client: WebClient, val cf: PDFGener
             .onStatus({ obj: HttpStatus -> obj.isError }) { obj: ClientResponse -> obj.createException() }
             .bodyToMono<ByteArray>()
             .block() ?: throw RuntimeException("PDF could not be generated")
-
+        log.debug("Created PDF OK  (${bytes.size})")
+        return bytes
     }
 }
