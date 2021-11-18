@@ -16,7 +16,7 @@ class KafkaSøknadKonsument(val joark: JoarkClient) {
     fun konsumer(consumerRecord: ConsumerRecord<String, UtenlandsSøknadKafka>) {
         value = consumerRecord.value()
         val key = consumerRecord.key();
-        log.info("WOHOO, fikk søknad $value")
+        log.trace("WOHOO, fikk søknad $value")
         val id = joark.opprettJournalpost(Journalpost(tilleggsopplysninger = tillegg(), dokumenter = docs(),tema = "AAP", behandlingstema = "AAP", tittel="jalla", avsenderMottaker = AvsenderMottaker(key,navn="Gurba"), bruker = Bruker(key)))
         log.info("WOHOO, fikk arkivert $id")
     }

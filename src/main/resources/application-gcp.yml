@@ -35,7 +35,7 @@ spring:
           json:
             trusted:
               packages: no.nav.aap.api.søknad.model
-      auto-offset-reset: earliest
+      auto-offset-reset: latest
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       group-id: utland
@@ -45,10 +45,10 @@ no.nav:
       client:
         registration:
           clientcredentials:
-              token-endpoint-url: https://login.microsoftonline.com/${AZURE_APP_TENANT_ID}/oauth2/v2.0/token
+              token-endpoint-url: https://login.microsoftonline.com/${azure.app.tenant.id}/oauth2/v2.0/token
               grant-type: client_credentials
               scope: api://dev-fss.aap.aap-fss-proxy/.default
               authentication:
-                client-id: ${AZURE_APP_CLIENT_ID}
-                client-jwk: ${AZURE_APP_JWK}
+                client-id: ${azure.app.client.id}
+                client-jwk: ${azure.app.jwk}
                 client-auth-method: private_key_jwt
