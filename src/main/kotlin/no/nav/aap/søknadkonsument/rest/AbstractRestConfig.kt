@@ -7,7 +7,6 @@ import org.springframework.web.reactive.function.client.ClientRequest
 import org.springframework.web.reactive.function.client.ExchangeFilterFunction
 import org.springframework.web.reactive.function.client.ExchangeFunction
 import java.net.URI
-
  abstract class AbstractRestConfig  protected constructor(val baseUri: URI, protected val pingPath: String, val isEnabled: Boolean) {
     fun pingEndpoint() = URIUtil.uri(baseUri, pingPath)
     fun name(): String = baseUri.host
