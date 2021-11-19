@@ -14,7 +14,7 @@ import org.zalando.problem.jackson.ProblemModule
 
 
 @Configuration
-class ellesRestBeanConfig {
+class FellesRestBeanConfig {
     @Bean
     fun customizer(): Jackson2ObjectMapperBuilderCustomizer {
         return Jackson2ObjectMapperBuilderCustomizer { b: Jackson2ObjectMapperBuilder ->
