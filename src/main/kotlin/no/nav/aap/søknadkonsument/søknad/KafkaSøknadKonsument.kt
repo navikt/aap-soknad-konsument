@@ -16,7 +16,7 @@ import java.util.*
 class KafkaSøknadKonsument(val joark: JoarkClient, val pdfGen: PDFGeneratorClient) {
     private val log = LoggerUtil.getLogger(javaClass)
 
-    @KafkaListener(, topics = ["#{'\${utenlands.topic:aap.aap-utland-soknad-sendt.v1}'}"],  groupId = "#{'\${spring.kafka.consumer.group-id}'}")
+    @KafkaListener(topics = ["#{'\${utenlands.topic:aap.aap-utland-soknad-sendt.v1}'}"],  groupId = "#{'\${spring.kafka.consumer.group-id}'}")
     fun konsumer(consumerRecord: ConsumerRecord<String, UtenlandsSøknadKafka>,@Header(NAV_CALL_ID)  callId: String) {
         MDCUtil.toMDC(NAV_CALL_ID,callId)
         val søknad = consumerRecord.value()
