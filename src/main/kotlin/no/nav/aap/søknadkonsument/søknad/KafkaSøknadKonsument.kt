@@ -29,7 +29,7 @@ class KafkaSøknadKonsument(val joark: JoarkClient, val pdfGen: PDFGeneratorClie
     private fun docs(søknad: UtenlandsSøknadKafka): List<Dokument> {
         return listOf(Dokument("Søknad om å beholde AAP ved opphold i utlandet","NAV 11-03.07", listOf(
             DokumentVariant(
-                "PDF/A",
+                "PDFA",
                 Base64.getEncoder().encodeToString(pdfGen.generate(søknad)),
                 "Arkiv"
             ))))
