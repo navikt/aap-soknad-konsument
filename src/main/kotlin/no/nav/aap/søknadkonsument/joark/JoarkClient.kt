@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component
 @Component
 class JoarkClient(private val adapter: JoarkClientAdapter) {
 
-    fun opprettJournalpost(journalpost: Journalpost): String {
-         return adapter.opprettJournalpost(journalpost)
+    fun opprettJournalpost(journalpost: Journalpost): String? {
+         return adapter.opprettJournalpost(journalpost)?.journalpostId
     }
 }
