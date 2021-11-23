@@ -31,7 +31,7 @@ class KafkaSøknadKonsument(val joark: JoarkClient, val pdfGen: PDFGeneratorClie
             DokumentVariant(
                 "PDFA",
                 Base64.getEncoder().encodeToString(pdfGen.generate(søknad)),
-                "Arkiv"
+                "ARKIV"
             ))))
     }
 }
