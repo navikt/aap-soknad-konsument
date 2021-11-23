@@ -22,7 +22,9 @@ class KafkaSøknadKonsument(val joark: JoarkClient, val pdfGen: PDFGeneratorClie
         val søknad = consumerRecord.value()
         val fnr = consumerRecord.key();
         log.trace("WOHOO, fikk søknad $søknad")
-        val id = joark.opprettJournalpost(Journalpost(tilleggsopplysninger = listOf(), dokumenter = docs(søknad),tema = "AAP", tittel="Søknad om å beholde AAP ved opphold i utlandet", avsenderMottaker = AvsenderMottaker(fnr,navn="Gurba"), bruker = Bruker(fnr)))
+        val id = joark.opprettJournalpost(Journalpost(tilleggsopplysninger = listOf(), dokumenter = docs(søknad),tema = "AAP", tittel="Søknad om å beholde AAP ved opphold i utlandet", avsenderMottaker = AvsenderMottaker(
+            id =fnr,
+            navn =søknad.navn?.navn()), bruker = Bruker(fnr)))
         log.info("WOHOO, fikk arkivert $id")
     }
 

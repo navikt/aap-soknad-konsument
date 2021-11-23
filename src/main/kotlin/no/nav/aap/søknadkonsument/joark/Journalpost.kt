@@ -71,7 +71,7 @@ data class Bruker(
 data class AvsenderMottaker(
     val id: String,
     val idType: String = ID_TYPE,
-    val navn: String
+    val navn: String?
 )
 
 data class KlageApiJournalpost(
