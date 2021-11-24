@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component
 class PDFGeneratorClient(val adapter: PDFGeneratorAdapter) : RetryAware {
     private val log = LoggerUtil.getLogger(javaClass)
 
-    fun  generate(søknad: UtenlandsSøknadKafka) : ByteArray {
+    fun  generate(søknad: UtenlandsSøknadKafka) : ByteArray? {
         log.debug("Lager PDF fra $søknad.")
         return adapter.generate(søknad)
     }

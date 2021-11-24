@@ -25,6 +25,4 @@ class PdfGeneratorkClientConfig :WebFluxConfigurer {
             .filter(correlatingFilterFunction())
             .build()
     }
-
-
 }
