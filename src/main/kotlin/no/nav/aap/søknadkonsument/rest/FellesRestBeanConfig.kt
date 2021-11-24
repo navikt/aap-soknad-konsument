@@ -2,6 +2,9 @@ package no.nav.aap.søknadkonsument.rest
 
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.KotlinModule
+import io.swagger.v3.oas.models.OpenAPI
+import io.swagger.v3.oas.models.info.Info
+import io.swagger.v3.oas.models.info.License
 import no.nav.aap.søknadkonsument.rest.aad.OIDCResponseModule
 import no.nav.boot.conditionals.ConditionalOnDevOrLocal
 import org.springframework.boot.actuate.trace.http.HttpExchangeTracer
@@ -29,6 +32,16 @@ class FellesRestBeanConfig {
     @ConditionalOnDevOrLocal
     fun httpTraceRepository(): HttpTraceRepository {
         return InMemoryHttpTraceRepository()
+    }
+    @Bean
+    fun swagger(): OpenAPI? {
+        return OpenAPI()
+            .info(
+                Info().title("AAP søknadfordeler")
+                    .description("Fordeling av søknader")
+                    .version("v0.0.1")
+                    .license(License().name("MIT").url("http://nav.no"))
+            )
     }
 
     @ConditionalOnDevOrLocal

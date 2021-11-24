@@ -16,8 +16,17 @@ spring:
       write-empty-json-arrays: true
       fail-on-empty-beans: false
 management :
+  info:
+    java:
+      enabled: true
+    env:
+      enabled: true
   health:
     ping:
       enabled: false
     diskspace:
       enabled: false
+springdoc:
+  packagesToScan: no.nav.aap
+  swagger-ui:
+    disable-swagger-default-url: true
