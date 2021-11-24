@@ -10,7 +10,7 @@ class PDFGeneratorClient(val adapter: PDFGeneratorAdapter) : RetryAware {
     private val log = LoggerUtil.getLogger(javaClass)
 
     fun  generate(søknad: UtenlandsSøknadKafka) : ByteArray {
-        log.debug("Creating PDF from $søknad.")
+        log.debug("Lager PDF fra $søknad.")
         return adapter.generate(søknad)
     }
 }

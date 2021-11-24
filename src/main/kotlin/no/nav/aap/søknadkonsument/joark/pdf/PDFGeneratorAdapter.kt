@@ -1,7 +1,9 @@
 package no.nav.aap.søknadkonsument.joark.pdf
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import no.nav.aap.api.søknad.model.UtenlandsSøknadKafka
 import no.nav.aap.søknadkonsument.config.Constants.PDFGEN
+import no.nav.aap.søknadkonsument.felles.Fødselsnummer
 import no.nav.aap.søknadkonsument.rest.AbstractWebClientAdapter
 import no.nav.aap.søknadkonsument.util.LoggerUtil
 import org.springframework.beans.factory.annotation.Qualifier
@@ -13,20 +15,28 @@ import org.springframework.web.reactive.function.client.WebClient
 import org.springframework.web.reactive.function.client.bodyToMono
 
 @Component
-class PDFGeneratorAdapter(@Qualifier(PDFGEN) client: WebClient, val cf: PDFGeneratorConfig) : AbstractWebClientAdapter(client,cf){
+class PDFGeneratorAdapter(@Qualifier(PDFGEN) client: WebClient, val cf: PDFGeneratorConfig, val mapper: ObjectMapper) : AbstractWebClientAdapter(client,cf){
     private val log = LoggerUtil.getLogger(javaClass)
 
     fun  generate(søknad: UtenlandsSøknadKafka) : ByteArray {
-        log.debug("Creating PDF from $søknad via ${cf.baseUri}")
+        val pdfData = mapper.writeValueAsString(
+            PDFData(
+                Fødselsnummer(søknad.fnr),
+                søknad.land,
+                søknad.navn,
+                søknad.periode
+            )
+        )
+        log.debug("Lager PDF fra $søknad via ${cf.baseUri} og ${pdfData}")
         var bytes = webClient.post()
             .uri { it.path(cf.path).build() }
             .contentType(APPLICATION_JSON)
-            .bodyValue(søknad)
+            .bodyValue(pdfData)
             .retrieve()
             .onStatus({ obj: HttpStatus -> obj.isError }) { obj: ClientResponse -> obj.createException() }
             .bodyToMono<ByteArray>()
             .block() ?: throw RuntimeException("PDF could not be generated")
-        log.debug("Created PDF OK  (${bytes.size})")
+        log.debug("Laget PDF OK (${bytes.size} bytes)")
         return bytes
     }
 }
