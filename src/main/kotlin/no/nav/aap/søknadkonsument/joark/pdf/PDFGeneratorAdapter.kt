@@ -19,23 +19,25 @@ class PDFGeneratorAdapter(@Qualifier(PDFGEN) client: WebClient, val cf: PDFGener
     private val log = LoggerUtil.getLogger(javaClass)
 
     fun  generate(søknad: UtenlandsSøknadKafka) : ByteArray {
-        log.debug("Creating PDF from $søknad via ${cf.baseUri}")
+        log.debug("Lager PDF fra $søknad via ${cf.baseUri}")
+        val pdfData = mapper.writeValueAsString(
+            PDFData(
+                Fødselsnummer(søknad.fnr),
+                søknad.land,
+                søknad.navn,
+                søknad.periode
+            )
+        )
+        log.debug("Lager PDF fra $søknad via ${cf.baseUri} og ${pdfData}")
         var bytes = webClient.post()
             .uri { it.path(cf.path).build() }
             .contentType(APPLICATION_JSON)
-            .bodyValue(mapper.writeValueAsString(
-                PDFData(
-                    Fødselsnummer(søknad.fnr),
-                    søknad.land,
-                    søknad.navn,
-                    søknad.periode
-                )
-            ))
+            .bodyValue(pdfData)
             .retrieve()
             .onStatus({ obj: HttpStatus -> obj.isError }) { obj: ClientResponse -> obj.createException() }
             .bodyToMono<ByteArray>()
             .block() ?: throw RuntimeException("PDF could not be generated")
-        log.debug("Created PDF OK (${bytes.size} bytes)")
+        log.debug("Laget PDF OK (${bytes.size} bytes)")
         return bytes
     }
 }
