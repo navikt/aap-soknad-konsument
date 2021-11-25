@@ -19,8 +19,7 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder
 import org.springframework.stereotype.Component
 import org.zalando.problem.jackson.ProblemModule
-import java.time.Instant
-import java.time.Instant.*
+import java.time.Instant.ofEpochMilli
 import java.time.LocalDateTime.ofInstant
 import java.time.ZoneId.systemDefault
 import java.time.format.DateTimeFormatter.ofPattern
@@ -63,7 +62,7 @@ class FellesRestBeanConfig {
     @Component
     class StartupInfoContributor(val ctx: ApplicationContext) : InfoContributor {
         override fun contribute(builder: org.springframework.boot.actuate.info.Info.Builder) {
-            builder.withDetail("startup-info", mapOf(
+            builder.withDetail("nais", mapOf(
                 "Startup time" to ofInstant(ofEpochMilli(ctx.startupDate), systemDefault()).format(ofPattern("yyyy-MM-dd HH:mm:ss"))
             ))
         }
