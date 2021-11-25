@@ -7,6 +7,6 @@ import org.springframework.stereotype.Component
 @Component
 class StartupInfoContributor(val ctx: ApplicationContext) : InfoContributor {
     override fun contribute(builder: Info.Builder) {
-        builder.withDetail("startup-time", mapOf("Startup time" to ctx.startupDate))
+        builder.withDetail("startup-info", mapOf("Startup time" to ctx.startupDate))
     }
 }
