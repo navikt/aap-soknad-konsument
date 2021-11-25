@@ -10,7 +10,7 @@ import java.time.ZoneId.systemDefault
 class StartupInfoContributor : InfoContributor {
     override fun contribute(builder: Info.Builder) {
         builder.withDetail(
-            "nais", mapOf(
+            "nais1", mapOf(
                 "Startup time" to
                 ofEpochMilli(getRuntimeMXBean().startTime).atZone(systemDefault()).toLocalDateTime(),
             )
