@@ -13,6 +13,7 @@ import org.springframework.boot.actuate.trace.http.HttpTraceRepository
 import org.springframework.boot.actuate.trace.http.InMemoryHttpTraceRepository
 import org.springframework.boot.actuate.web.trace.servlet.HttpTraceFilter
 import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer
+import org.springframework.boot.info.BuildProperties
 import org.springframework.context.ApplicationContext
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -60,9 +61,10 @@ class FellesRestBeanConfig {
         }
     }
     @Component
-    class StartupInfoContributor(val ctx: ApplicationContext) : InfoContributor {
+    class StartupInfoContributor(val ctx: ApplicationContext, val p: BuildProperties) : InfoContributor {
         override fun contribute(builder: org.springframework.boot.actuate.info.Info.Builder) {
-            builder.withDetail("nais", mapOf(
+            builder.withDetail("extra-info", mapOf(
+                "Build time" to p.time,
                 "Startup time" to ofInstant(ofEpochMilli(ctx.startupDate), systemDefault()).format(ofPattern("yyyy-MM-dd HH:mm:ss"))
             ))
         }
