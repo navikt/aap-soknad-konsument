@@ -7,14 +7,17 @@ import io.swagger.v3.oas.models.info.Info
 import io.swagger.v3.oas.models.info.License
 import no.nav.aap.søknadkonsument.rest.aad.OIDCResponseModule
 import no.nav.boot.conditionals.ConditionalOnDevOrLocal
+import org.springframework.boot.actuate.info.InfoContributor
 import org.springframework.boot.actuate.trace.http.HttpExchangeTracer
 import org.springframework.boot.actuate.trace.http.HttpTraceRepository
 import org.springframework.boot.actuate.trace.http.InMemoryHttpTraceRepository
 import org.springframework.boot.actuate.web.trace.servlet.HttpTraceFilter
 import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer
+import org.springframework.context.ApplicationContext
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder
+import org.springframework.stereotype.Component
 import org.zalando.problem.jackson.ProblemModule
 import javax.servlet.ServletException
 import javax.servlet.http.HttpServletRequest
@@ -50,6 +53,12 @@ class FellesRestBeanConfig {
         @Throws(ServletException::class)
         override fun shouldNotFilter(request: HttpServletRequest): Boolean {
             return request.servletPath.contains("actuator") || request.servletPath.contains("swagger")
+        }
+    }
+    @Component
+    class StartupInfoContributor(val ctx: ApplicationContext) : InfoContributor {
+        override fun contribute(builder: org.springframework.boot.actuate.info.Info.Builder) {
+            builder.withDetail("startup-info", mapOf("Startup time" to ctx.startupDate))
         }
     }
 }
