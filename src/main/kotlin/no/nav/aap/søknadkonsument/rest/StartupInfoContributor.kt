@@ -1,19 +1,12 @@
 
 import org.springframework.boot.actuate.info.Info
 import org.springframework.boot.actuate.info.InfoContributor
+import org.springframework.context.ApplicationContext
 import org.springframework.stereotype.Component
-import java.lang.management.ManagementFactory.getRuntimeMXBean
-import java.time.Instant.ofEpochMilli
-import java.time.ZoneId.systemDefault
 
 @Component
-class StartupInfoContributor : InfoContributor {
+class StartupInfoContributor(val ctx: ApplicationContext) : InfoContributor {
     override fun contribute(builder: Info.Builder) {
-        builder.withDetail(
-            "nais1", mapOf(
-                "Startup time" to
-                ofEpochMilli(getRuntimeMXBean().startTime).atZone(systemDefault()).toLocalDateTime(),
-            )
-        )
+        builder.withDetail("startup-time", mapOf("Startup time" to ctx.startupDate))
     }
 }
