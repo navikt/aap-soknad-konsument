@@ -1,6 +1,6 @@
 spring:
   application:
-    name: "aap-soknad-konsument"
+    name: ${nais.app.name:aap-soknad-konsument}
   main:
     banner-mode: off
   jackson:
