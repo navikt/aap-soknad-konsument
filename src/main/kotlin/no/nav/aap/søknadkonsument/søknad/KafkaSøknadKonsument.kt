@@ -1,6 +1,7 @@
 package no.nav.aap.søknadkonsument.søknad
 
 import no.nav.aap.api.søknad.model.UtenlandsSøknadKafka
+import no.nav.aap.søknadkonsument.felles.Fødselsnummer
 import no.nav.aap.søknadkonsument.joark.*
 import no.nav.aap.søknadkonsument.joark.pdf.PDFGeneratorClient
 import no.nav.aap.søknadkonsument.util.LoggerUtil
@@ -17,14 +18,14 @@ class KafkaSøknadKonsument(val joark: JoarkClient, val pdfGen: PDFGeneratorClie
     private val log = LoggerUtil.getLogger(javaClass)
 
     @KafkaListener(topics = ["#{'\${utenlands.topic:aap.aap-utland-soknad-sendt.v1}'}"],  groupId = "#{'\${spring.kafka.consumer.group-id}'}")
-    fun konsumer(consumerRecord: ConsumerRecord<String, UtenlandsSøknadKafka>,@Header(NAV_CALL_ID)  callId: String) {
+    fun konsumer(consumerRecord: ConsumerRecord<Fødselsnummer, UtenlandsSøknadKafka>, @Header(NAV_CALL_ID)  callId: String) {
         MDCUtil.toMDC(NAV_CALL_ID,callId)
         val søknad = consumerRecord.value()
         val fnr = consumerRecord.key();
-        log.trace("WOHOO, fikk søknad $søknad")
+        log.trace("WOHOO, fikk søknad $fnr -> $søknad")
         val id = joark.opprettJournalpost(Journalpost(tilleggsopplysninger = listOf(), dokumenter = docs(søknad),tema = "AAP", tittel="Søknad om å beholde AAP ved opphold i utlandet", avsenderMottaker = AvsenderMottaker(
-            id =fnr,
-            navn =søknad.navn?.navn()), bruker = Bruker(fnr)))
+            id =fnr.fnr,
+            navn =søknad.navn?.navn()), bruker = Bruker(fnr.fnr)))
         log.info("WOHOO, fikk arkivert $id")
     }
 
