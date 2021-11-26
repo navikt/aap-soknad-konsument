@@ -1,7 +1,7 @@
 package no.nav.aap.søknadkonsument.søknad
 
 import no.nav.aap.api.søknad.model.UtenlandsSøknadKafka
-import no.nav.aap.søknadkonsument.felles.Fødselsnummer
+import no.nav.aap.api.søknad.model.Fødselsnummer
 import no.nav.aap.søknadkonsument.joark.*
 import no.nav.aap.søknadkonsument.joark.pdf.PDFGeneratorClient
 import no.nav.aap.søknadkonsument.util.LoggerUtil

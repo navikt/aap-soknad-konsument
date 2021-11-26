@@ -2,7 +2,6 @@
 package no.nav.aap.api.søknad.model
 
 import com.neovisionaries.i18n.CountryCode
-import no.nav.aap.søknadkonsument.felles.Periode
 
 data class UtenlandsSøknadKafka(val fnr: String, val land: CountryCode, val periode: Periode, val navn: Navn?)
 

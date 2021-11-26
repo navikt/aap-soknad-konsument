@@ -1,4 +1,4 @@
-package no.nav.aap.søknadkonsument.felles
+package no.nav.aap.api.søknad.model
 
 import com.fasterxml.jackson.annotation.JsonValue
 
