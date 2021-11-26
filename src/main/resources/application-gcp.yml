@@ -34,7 +34,7 @@ spring:
         spring:
           json:
             trusted:
-              packages: no.nav.aap.api.felles
+              packages: no.nav.aap.api.felles, no.nav.aap.api.søknad.model
       auto-offset-reset: latest
       key-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
