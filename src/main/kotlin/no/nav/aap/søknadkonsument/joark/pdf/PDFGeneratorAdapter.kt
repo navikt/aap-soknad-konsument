@@ -7,11 +7,11 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonUnwrapped
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.neovisionaries.i18n.CountryCode
+import no.nav.aap.api.felles.Fødselsnummer
 import no.nav.aap.api.søknad.model.Navn
+import no.nav.aap.api.søknad.model.Periode
 import no.nav.aap.api.søknad.model.UtenlandsSøknadKafka
 import no.nav.aap.søknadkonsument.config.Constants.PDFGEN
-import no.nav.aap.felles.Fødselsnummer
-import no.nav.aap.api.søknad.model.Periode
 import no.nav.aap.søknadkonsument.rest.AbstractWebClientAdapter
 import no.nav.aap.søknadkonsument.util.LoggerUtil
 import org.springframework.beans.factory.annotation.Qualifier

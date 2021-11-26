@@ -1,8 +1,8 @@
 package no.nav.aap.søknadkonsument.util
 
 import com.nimbusds.oauth2.sdk.token.AccessTokenType
+import no.nav.aap.api.felles.Fødselsnummer
 import no.nav.aap.søknadkonsument.config.Constants.ISSUER
-import no.nav.aap.felles.Fødselsnummer
 import no.nav.security.token.support.core.context.TokenValidationContextHolder
 import org.springframework.stereotype.Component
 
