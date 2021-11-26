@@ -27,7 +27,7 @@ spring:
     producer:
       acks: 1
       client-id: ${spring.application.name}
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      key-serializer: org.springframework.kafka.support.serializer.JsonSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
     consumer:
       properties:
@@ -36,7 +36,7 @@ spring:
             trusted:
               packages: no.nav.aap.api.søknad.model
       auto-offset-reset: latest
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      key-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       group-id: utland
 no.nav:
