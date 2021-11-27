@@ -25,7 +25,7 @@ class PDFGeneratorAdapter(@Qualifier(PDFGEN) client: WebClient, val cf: PDFGener
     private val log = LoggerUtil.getLogger(javaClass)
 
     fun  generate(søknad: UtenlandsSøknadKafka) : ByteArray? {
-        val pdfData = søknad.pdfData()
+        val pdfData = søknad.pdfData(mapper)
         log.debug("Lager PDF fra $søknad via ${cf.baseUri} og ${pdfData}")
         val bytes = webClient.post()
             .uri { it.path(cf.path).build() }
@@ -40,9 +40,9 @@ class PDFGeneratorAdapter(@Qualifier(PDFGEN) client: WebClient, val cf: PDFGener
     }
 }
 
-fun UtenlandsSøknadKafka.pdfData() = PDFData(fnr,land.toLocale().displayCountry,navn,periode)
+internal fun UtenlandsSøknadKafka.pdfData(m: ObjectMapper) = m.writeValueAsString(PDFData(fnr,land.toLocale().displayCountry,navn,periode))
 
-data class PDFData (val fødselsnummer: Fødselsnummer,
+internal data class PDFData (val fødselsnummer: Fødselsnummer,
                     val land: String,
                     @get:JsonUnwrapped val navn: Navn?,
                     @get:JsonUnwrapped val periode: Periode,
