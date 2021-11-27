@@ -40,7 +40,7 @@ class PDFGeneratorAdapter(@Qualifier(PDFGEN) client: WebClient, val cf: PDFGener
     }
 }
 
-internal fun UtenlandsSøknadKafka.pdfData(m: ObjectMapper) = m.writeValueAsString(PDFData(fnr,land.toLocale().displayCountry,navn,periode))
+internal fun UtenlandsSøknadKafka.pdfData(m: ObjectMapper) = m.writeValueAsString(PDFData(søker.fnr,land.toLocale().displayCountry,søker.navn,periode))
 
 internal data class PDFData (val fødselsnummer: Fødselsnummer,
                     val land: String,
