@@ -1,5 +1,7 @@
 package no.nav.aap.søknadkonsument.joark
 
+import no.nav.aap.api.felles.Fødselsnummer
+
 data class Journalpost(
     val journalposttype: String = "INNGAAENDE",
     val tema: String,
@@ -64,16 +66,12 @@ enum class FagsaksSystem {
 private const val ID_TYPE = "FNR"
 
 data class Bruker(
-    val id: String,
+    val id: Fødselsnummer,
     val idType: String = ID_TYPE
 )
 
 data class AvsenderMottaker(
-    val id: String,
+    val id: Fødselsnummer,
     val idType: String = ID_TYPE,
     val navn: String?
-)
-
-data class KlageApiJournalpost(
-    val id: String
 )
