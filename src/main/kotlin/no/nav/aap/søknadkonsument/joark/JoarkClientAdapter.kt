@@ -12,13 +12,12 @@ import org.springframework.web.reactive.function.client.bodyToMono
 
 @Component
  class JoarkClientAdapter internal constructor(@Qualifier(JOARK) webClient: WebClient, cfg: JoarkConfig) : AbstractWebClientAdapter(webClient, cfg) {
-  fun opprettJournalpost(journalpost: Journalpost): JoarkResponse? {
-      return webClient.post()
+  fun opprettJournalpost(journalpost: Journalpost): JoarkResponse? =
+       webClient.post()
         .contentType(APPLICATION_JSON)
         .bodyValue(journalpost)
         .retrieve()
         .onStatus({ obj: HttpStatus -> obj.isError }) { obj: ClientResponse -> obj.createException() }
         .bodyToMono<JoarkResponse>()
         .block()
-    }
  }

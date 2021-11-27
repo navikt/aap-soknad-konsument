@@ -14,15 +14,14 @@ import reactor.netty.http.client.HttpClient
 
 
 @Configuration
-class PdfGeneratorkClientConfig :WebFluxConfigurer {
+class PdfGeneratorkClientConfig : WebFluxConfigurer {
     @Qualifier(PDFGEN)
     @Bean
-    fun webClientPdfGen(builder: WebClient.Builder, cfg: PDFGeneratorConfig, env: Environment): WebClient {
-        return builder
+    fun webClientPdfGen(builder: WebClient.Builder, cfg: PDFGeneratorConfig, env: Environment): WebClient =
+        builder
             .codecs { configurer -> configurer.defaultCodecs().maxInMemorySize(50 * 1024 * 1024) }
             .clientConnector(ReactorClientHttpConnector(HttpClient.create().wiretap(isDevOrLocal(env))))
             .baseUrl(cfg.baseUri.toString())
             .filter(correlatingFilterFunction())
             .build()
-    }
 }

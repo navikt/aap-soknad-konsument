@@ -2,7 +2,12 @@ package no.nav.aap.søknadkonsument.søknad
 
 import no.nav.aap.api.felles.Fødselsnummer
 import no.nav.aap.api.søknad.model.UtenlandsSøknadKafka
-import no.nav.aap.søknadkonsument.joark.*
+import no.nav.aap.søknadkonsument.joark.AvsenderMottaker
+import no.nav.aap.søknadkonsument.joark.Bruker
+import no.nav.aap.søknadkonsument.joark.Dokument
+import no.nav.aap.søknadkonsument.joark.DokumentVariant
+import no.nav.aap.søknadkonsument.joark.JoarkClient
+import no.nav.aap.søknadkonsument.joark.Journalpost
 import no.nav.aap.søknadkonsument.joark.pdf.PDFGeneratorClient
 import no.nav.aap.søknadkonsument.util.LoggerUtil
 import no.nav.aap.søknadkonsument.util.MDCUtil
@@ -11,7 +16,6 @@ import org.apache.kafka.clients.consumer.ConsumerRecord
 import org.springframework.kafka.annotation.KafkaListener
 import org.springframework.messaging.handler.annotation.Header
 import org.springframework.stereotype.Component
-import java.util.*
 
 @Component
 class KafkaSøknadKonsument(val joark: JoarkClient, val pdfGen: PDFGeneratorClient) {
@@ -21,7 +25,7 @@ class KafkaSøknadKonsument(val joark: JoarkClient, val pdfGen: PDFGeneratorClie
     fun konsumer(consumerRecord: ConsumerRecord<Fødselsnummer, UtenlandsSøknadKafka>, @Header(NAV_CALL_ID)  callId: String) {
         MDCUtil.toMDC(NAV_CALL_ID,callId)
         val søknad = consumerRecord.value()
-        val fnr = consumerRecord.key();
+        val fnr = consumerRecord.key()
         log.trace("WOHOO, fikk søknad $fnr -> $søknad")
         val id = joark.opprettJournalpost(Journalpost(tilleggsopplysninger = listOf(), dokumenter = docs(søknad),tema = "AAP", tittel="Søknad om å beholde AAP ved opphold i utlandet", avsenderMottaker = AvsenderMottaker(
             id =fnr.fnr,
@@ -29,12 +33,7 @@ class KafkaSøknadKonsument(val joark: JoarkClient, val pdfGen: PDFGeneratorClie
         log.info("WOHOO, fikk arkivert $id")
     }
 
-    private fun docs(søknad: UtenlandsSøknadKafka): List<Dokument> {
-        return listOf(Dokument("Søknad om å beholde AAP ved opphold i utlandet","NAV 11-03.07", listOf(
-            DokumentVariant(
-                "PDFA",
-                Base64.getEncoder().encodeToString(pdfGen.generate(søknad)),
-                "ARKIV"
-            ))))
-    }
+    private fun docs(søknad: UtenlandsSøknadKafka): List<Dokument> =
+         listOf(Dokument("Søknad om å beholde AAP ved opphold i utlandet","NAV 11-03.07", listOf(
+            DokumentVariant(fysiskDokument = pdfGen.generate(søknad),))))
 }

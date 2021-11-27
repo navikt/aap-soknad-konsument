@@ -22,9 +22,9 @@ data class Dokument(
 )
 
 data class DokumentVariant(
-    val filtype: String,
+    val filtype: String = "PDFA",
     val fysiskDokument: String,
-    val variantformat: String
+    val variantformat: String = "ARKIV"
 )
 
 data class Sak(

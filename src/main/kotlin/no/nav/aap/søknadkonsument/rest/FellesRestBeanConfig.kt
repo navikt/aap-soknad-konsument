@@ -30,26 +30,24 @@ import javax.servlet.http.HttpServletRequest
 @Configuration
 class FellesRestBeanConfig {
     @Bean
-    fun customizer(): Jackson2ObjectMapperBuilderCustomizer {
-        return Jackson2ObjectMapperBuilderCustomizer { b: Jackson2ObjectMapperBuilder ->
-            b.modules(ProblemModule(), JavaTimeModule(), OIDCResponseModule(),KotlinModule())
+    fun customizer(): Jackson2ObjectMapperBuilderCustomizer =
+        Jackson2ObjectMapperBuilderCustomizer { b: Jackson2ObjectMapperBuilder ->
+            b.modules(ProblemModule(), JavaTimeModule(), OIDCResponseModule(), KotlinModule.Builder().build())
         }
-    }
+
     @Bean
     @ConditionalOnDevOrLocal
-    fun httpTraceRepository(): HttpTraceRepository {
-        return InMemoryHttpTraceRepository()
-    }
+    fun httpTraceRepository(): HttpTraceRepository = InMemoryHttpTraceRepository()
+
+
     @Bean
-    fun swagger(): OpenAPI? {
-        return OpenAPI()
-            .info(
+    fun swagger() =
+        OpenAPI().info(
                 Info().title("AAP søknadfordeler")
                     .description("Fordeling av søknader")
                     .version("v0.0.1")
-                    .license(License().name("MIT").url("http://nav.no"))
-            )
-    }
+                    .license(License().name("MIT").url("http://nav.no")))
+
 
     @ConditionalOnDevOrLocal
     class ActuatorIgnoringTraceRequestFilter(repository: HttpTraceRepository?, tracer: HttpExchangeTracer?) :
@@ -59,12 +57,15 @@ class FellesRestBeanConfig {
             return request.servletPath.contains("actuator") || request.servletPath.contains("swagger")
         }
     }
+
     @Component
     class StartupInfoContributor(val ctx: ApplicationContext) : InfoContributor {
         override fun contribute(builder: org.springframework.boot.actuate.info.Info.Builder) {
-            builder.withDetail("extra-info", mapOf(
-                "Startup time" to ofInstant(ofEpochMilli(ctx.startupDate), systemDefault()).format(ofPattern("yyyy-MM-dd HH:mm:ss"))
-            ))
+            builder.withDetail(
+                    "extra-info", mapOf(
+                    "Startup time" to ofInstant(
+                            ofEpochMilli(ctx.startupDate),
+                            systemDefault()).format(ofPattern("yyyy-MM-dd HH:mm:ss"))))
         }
     }
 }

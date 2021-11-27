@@ -17,13 +17,12 @@ import reactor.netty.http.client.HttpClient
 class JoarkClientConfig  {
     @Qualifier(JOARK)
     @Bean
-    fun webClientJoark(builder: WebClient.Builder, cfg: JoarkConfig, aadFilterFunction: AADFilterFunction, env: Environment): WebClient {
-        return builder
+    fun webClientJoark(builder: WebClient.Builder, cfg: JoarkConfig, aadFilterFunction: AADFilterFunction, env: Environment): WebClient =
+         builder
             .clientConnector(ReactorClientHttpConnector(HttpClient.create().wiretap(isDevOrLocal(env))))
             .baseUrl(cfg.baseUri.toString())
             .filter(correlatingFilterFunction())
             .filter(temaFilterFunction())
             .filter(aadFilterFunction)
             .build()
-    }
 }

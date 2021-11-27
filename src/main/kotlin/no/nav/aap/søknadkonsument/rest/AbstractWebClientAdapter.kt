@@ -19,13 +19,8 @@ abstract class AbstractWebClientAdapter(protected val webClient: WebClient, prot
             .block()
     }
 
-    override fun name(): String {
-        return cfg.name()
-    }
-
+    override fun name() = cfg.name()
     protected val baseUri: URI = cfg.baseUri
+    override fun pingEndpoint() = cfg.pingEndpoint()
 
-    override fun pingEndpoint(): URI {
-        return cfg.pingEndpoint()
-    }
 }
