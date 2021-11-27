@@ -2,11 +2,8 @@ package no.nav.aap.søknadkonsument.joark.pdf
 
 import com.fasterxml.jackson.annotation.JsonFormat
 import com.fasterxml.jackson.annotation.JsonFormat.Shape.STRING
-import com.fasterxml.jackson.annotation.JsonIgnore
-import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonUnwrapped
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.neovisionaries.i18n.CountryCode
 import no.nav.aap.api.felles.Fødselsnummer
 import no.nav.aap.api.søknad.model.Navn
 import no.nav.aap.api.søknad.model.Periode
@@ -30,8 +27,8 @@ class PDFGeneratorAdapter(@Qualifier(PDFGEN) client: WebClient, val cf: PDFGener
     fun  generate(søknad: UtenlandsSøknadKafka) : ByteArray? {
         val pdfData = mapper.writeValueAsString(
             PDFData(
-                Fødselsnummer(søknad.fnr),
-                søknad.land,
+                søknad.fnr,
+                søknad.land.toLocale().displayCountry,
                 søknad.navn,
                 søknad.periode
             )
@@ -50,11 +47,7 @@ class PDFGeneratorAdapter(@Qualifier(PDFGEN) client: WebClient, val cf: PDFGener
     }
 }
 data class PDFData (val fødselsnummer: Fødselsnummer,
-                    @JsonIgnore val land: CountryCode,
+                    val land: String,
                     @get:JsonUnwrapped val navn: Navn?,
                     @get:JsonUnwrapped val periode: Periode,
-                    @get:JsonFormat(shape = STRING, pattern = "dd.MM.yyyy") val dato: LocalDate = LocalDate.now())  {
-
-    @JsonProperty
-    fun land() = land.toLocale().displayCountry
-}
+                    @get:JsonFormat(shape = STRING, pattern = "dd.MM.yyyy") val dato: LocalDate = LocalDate.now())

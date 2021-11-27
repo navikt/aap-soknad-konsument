@@ -2,8 +2,9 @@
 package no.nav.aap.api.søknad.model
 
 import com.neovisionaries.i18n.CountryCode
+import no.nav.aap.api.felles.Fødselsnummer
 
-data class UtenlandsSøknadKafka(val fnr: String, val land: CountryCode, val periode: Periode, val navn: Navn?)
+data class UtenlandsSøknadKafka(val fnr: Fødselsnummer, val land: CountryCode, val periode: Periode, val navn: Navn?)
 
 data class Navn(val fornavn: String?,val mellomnavn: String?,val etternavn: String?) {
     fun navn() : String {
