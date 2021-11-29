@@ -5,7 +5,7 @@ import com.fasterxml.jackson.module.kotlin.KotlinModule
 import io.swagger.v3.oas.models.OpenAPI
 import io.swagger.v3.oas.models.info.Info
 import io.swagger.v3.oas.models.info.License
-import no.nav.aap.søknadkonsument.rest.aad.OIDCResponseModule
+import no.nav.aap.rest.TokenXModule
 import no.nav.aap.util.AuthContext
 import no.nav.aap.util.TimeUtil
 import no.nav.boot.conditionals.ConditionalOnDevOrLocal
@@ -31,7 +31,7 @@ class FellesRestBeanConfig {
     @Bean
     fun customizer(): Jackson2ObjectMapperBuilderCustomizer =
         Jackson2ObjectMapperBuilderCustomizer { b: Jackson2ObjectMapperBuilder ->
-            b.modules(ProblemModule(), JavaTimeModule(), OIDCResponseModule(), KotlinModule.Builder().build())
+            b.modules(ProblemModule(), JavaTimeModule(), TokenXModule(),KotlinModule.Builder().build())
         }
 
     @Bean

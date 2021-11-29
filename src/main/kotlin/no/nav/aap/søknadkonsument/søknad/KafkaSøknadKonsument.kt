@@ -10,9 +10,9 @@ import no.nav.aap.joark.Journalpost
 import no.nav.aap.søknadkonsument.joark.JoarkClient
 import no.nav.aap.søknadkonsument.joark.pdf.PDFGeneratorClient
 import no.nav.aap.søknadkonsument.joark.pdf.pdf
-import no.nav.aap.søknadkonsument.util.LoggerUtil
-import no.nav.aap.søknadkonsument.util.MDCUtil
-import no.nav.aap.søknadkonsument.util.MDCUtil.NAV_CALL_ID
+import no.nav.aap.util.LoggerUtil
+import no.nav.aap.util.MDCUtil
+import no.nav.aap.util.MDCUtil.NAV_CALL_ID
 import org.apache.kafka.clients.consumer.ConsumerRecord
 import org.springframework.kafka.annotation.KafkaListener
 import org.springframework.messaging.handler.annotation.Header

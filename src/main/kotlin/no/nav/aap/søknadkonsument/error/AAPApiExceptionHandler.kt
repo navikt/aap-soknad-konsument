@@ -1,6 +1,6 @@
 package no.nav.aap.søknadkonsument.error
 
-import no.nav.aap.søknadkonsument.util.AuthContext
+import no.nav.aap.util.AuthContext
 import no.nav.security.token.support.core.exceptions.JwtTokenMissingException
 import no.nav.security.token.support.spring.validation.interceptor.JwtTokenUnauthorizedException
 import org.springframework.core.env.Environment

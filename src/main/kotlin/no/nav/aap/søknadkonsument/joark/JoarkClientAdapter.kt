@@ -3,7 +3,7 @@ package no.nav.aap.søknadkonsument.joark
 import no.nav.aap.joark.JoarkResponse
 import no.nav.aap.joark.Journalpost
 import no.nav.aap.rest.AbstractWebClientAdapter
-import no.nav.aap.søknadkonsument.config.Constants.JOARK
+import no.nav.aap.util.Constants.JOARK
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType.APPLICATION_JSON

@@ -2,8 +2,8 @@ package no.nav.aap.søknadkonsument.joark
 
 import no.nav.aap.rest.AbstractWebClientAdapter.Companion.correlatingFilterFunction
 import no.nav.aap.rest.AbstractWebClientAdapter.Companion.temaFilterFunction
-import no.nav.aap.søknadkonsument.config.Constants.JOARK
 import no.nav.aap.søknadkonsument.rest.aad.AADFilterFunction
+import no.nav.aap.util.Constants.JOARK
 import no.nav.boot.conditionals.EnvUtil.isDevOrLocal
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.context.annotation.Bean
