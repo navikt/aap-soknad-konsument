@@ -8,18 +8,17 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.core.env.Environment
 import org.springframework.http.client.reactive.ReactorClientHttpConnector
-import org.springframework.web.reactive.config.WebFluxConfigurer
 import org.springframework.web.reactive.function.client.WebClient
 import reactor.netty.http.client.HttpClient
 
 
 @Configuration
-class PdfGeneratorkClientConfig : WebFluxConfigurer {
+class PdfGeneratorkClientConfig {
     @Qualifier(PDFGEN)
     @Bean
-    fun webClientPdfGen(builder: WebClient.Builder, cfg: PDFGeneratorConfig, env: Environment): WebClient =
+    fun webClientPdfGen(builder: WebClient.Builder, cfg: PDFGeneratorConfig, env: Environment) =
         builder
-            .codecs { configurer -> configurer.defaultCodecs().maxInMemorySize(50 * 1024 * 1024) }
+            .codecs { c -> c.defaultCodecs().maxInMemorySize(50 * 1024 * 1024) }
             .clientConnector(ReactorClientHttpConnector(HttpClient.create().wiretap(isDevOrLocal(env))))
             .baseUrl(cfg.baseUri.toString())
             .filter(correlatingFilterFunction())

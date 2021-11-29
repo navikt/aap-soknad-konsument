@@ -32,8 +32,7 @@ class AADFilterFunction internal constructor(
             val token = service.getAccessToken(cfg).accessToken
             log.trace("Token exchange for {} OK", url)
             log.trace(CONFIDENTIAL,"Token er {}",token)
-            return next.exchange(ClientRequest.from(req).header(AUTHORIZATION, bearerToken(token)).build()
-            )
+            return next.exchange(ClientRequest.from(req).header(AUTHORIZATION, bearerToken(token)).build())
         }
         log.trace("Ingen token exchange for {}", url)
         return next.exchange(ClientRequest.from(req).build())

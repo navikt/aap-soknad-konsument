@@ -9,19 +9,14 @@ import no.nav.security.token.support.client.core.oauth2.OAuth2AccessTokenRespons
 
 class OIDCResponseModule : Module() {
     override fun setupModule(context: SetupContext?) {
-        val module = SimpleModule()
+        SimpleModule()
             .setMixInAnnotation(OAuth2AccessTokenResponse::class.java, IgnoreUnknownMixin::class.java)
-        module.setupModule(context)
+            .setupModule(context)
     }
 
-    override fun getModuleName(): String? {
-        return OIDCResponseModule::class.java.simpleName
-    }
+    override fun getModuleName() = OIDCResponseModule::class.java.simpleName
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     private interface IgnoreUnknownMixin
-
-    override fun version(): Version? {
-        return versionFor(OIDCResponseModule::class.java)
-    }
+    override fun version(): Version? = versionFor(OIDCResponseModule::class.java)
 }
