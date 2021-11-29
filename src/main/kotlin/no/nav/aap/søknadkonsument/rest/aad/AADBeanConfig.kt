@@ -11,8 +11,6 @@ import java.net.URI
 class AADBeanConfig {
     @Bean
     fun configMatcher() = object : AADConfigMatcher {
-        override fun findProperties(configs: ClientConfigurationProperties, uri: URI): ClientProperties? {
-            return configs.registration["clientcredentials"]
-        }
+        override fun findProperties(configs: ClientConfigurationProperties, uri: URI): ClientProperties? = configs.registration["clientcredentials"]
     }
 }

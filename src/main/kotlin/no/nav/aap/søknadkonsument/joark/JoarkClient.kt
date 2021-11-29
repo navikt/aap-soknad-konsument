@@ -1,5 +1,6 @@
 package no.nav.aap.søknadkonsument.joark
 
+import no.nav.aap.joark.Journalpost
 import org.springframework.stereotype.Component
 
 @Component

@@ -1,8 +1,8 @@
 package no.nav.aap.søknadkonsument.rest.aad
 
-import no.nav.aap.søknadkonsument.util.AuthContext.Companion.bearerToken
-import no.nav.aap.søknadkonsument.util.LoggerUtil.getLogger
-import no.nav.aap.søknadkonsument.util.LoggerUtil.getSecureLogger
+import no.nav.aap.util.AuthContext.Companion.bearerToken
+import no.nav.aap.util.LoggerUtil.getLogger
+import no.nav.aap.util.LoggerUtil.getSecureLogger
 import no.nav.boot.conditionals.EnvUtil.CONFIDENTIAL
 import no.nav.security.token.support.client.core.oauth2.OAuth2AccessTokenService
 import no.nav.security.token.support.client.spring.ClientConfigurationProperties
@@ -16,7 +16,7 @@ import reactor.core.publisher.Mono
 
 
 @Component
-class AADFilterFunction internal constructor(
+class AADFilterFunction  (
     private val configs: ClientConfigurationProperties,
     private val service: OAuth2AccessTokenService,
     private val matcher: AADConfigMatcher) : ExchangeFilterFunction {
@@ -32,8 +32,7 @@ class AADFilterFunction internal constructor(
             val token = service.getAccessToken(cfg).accessToken
             log.trace("Token exchange for {} OK", url)
             log.trace(CONFIDENTIAL,"Token er {}",token)
-            return next.exchange(ClientRequest.from(req).header(AUTHORIZATION, bearerToken(token)).build()
-            )
+            return next.exchange(ClientRequest.from(req).header(AUTHORIZATION, bearerToken(token)).build())
         }
         log.trace("Ingen token exchange for {}", url)
         return next.exchange(ClientRequest.from(req).build())
