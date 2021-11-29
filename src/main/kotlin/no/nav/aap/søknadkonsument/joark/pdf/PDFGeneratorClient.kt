@@ -1,6 +1,6 @@
 package no.nav.aap.søknadkonsument.joark.pdf
 
-import no.nav.aap.api.søknad.model.UtenlandsSøknadKafka
+import no.nav.aap.api.felles.UtenlandsSøknadKafka
 import org.springframework.stereotype.Component
 import java.util.Base64.getEncoder
 

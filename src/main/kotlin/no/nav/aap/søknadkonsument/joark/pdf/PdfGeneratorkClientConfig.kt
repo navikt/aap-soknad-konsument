@@ -1,7 +1,7 @@
 package no.nav.aap.søknadkonsument.joark.pdf
 
-import no.nav.aap.søknadkonsument.config.Constants.PDFGEN
-import no.nav.aap.søknadkonsument.rest.AbstractRestConfig.Companion.correlatingFilterFunction
+import no.nav.aap.rest.AbstractWebClientAdapter.Companion.correlatingFilterFunction
+import no.nav.aap.søknadkonsument.joark.pdf.PDFGeneratorConfig.Companion.PDFGEN
 import no.nav.boot.conditionals.EnvUtil.isDevOrLocal
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.context.annotation.Bean

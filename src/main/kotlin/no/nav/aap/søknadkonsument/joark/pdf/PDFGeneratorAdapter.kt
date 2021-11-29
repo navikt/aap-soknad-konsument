@@ -6,11 +6,11 @@ import com.fasterxml.jackson.annotation.JsonUnwrapped
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.neovisionaries.i18n.CountryCode
 import no.nav.aap.api.felles.Fødselsnummer
-import no.nav.aap.api.søknad.model.Navn
-import no.nav.aap.api.søknad.model.Periode
-import no.nav.aap.api.søknad.model.UtenlandsSøknadKafka
-import no.nav.aap.søknadkonsument.config.Constants.PDFGEN
-import no.nav.aap.søknadkonsument.rest.AbstractWebClientAdapter
+import no.nav.aap.api.felles.Navn
+import no.nav.aap.api.felles.Periode
+import no.nav.aap.api.felles.UtenlandsSøknadKafka
+import no.nav.aap.rest.AbstractWebClientAdapter
+import no.nav.aap.søknadkonsument.joark.pdf.PDFGeneratorConfig.Companion.PDFGEN
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType.APPLICATION_JSON
@@ -37,6 +37,7 @@ class PDFGeneratorAdapter(@Qualifier(PDFGEN) client: WebClient, val cf: PDFGener
 internal fun UtenlandsSøknadKafka.pdfData(m: ObjectMapper) = m.writeValueAsString(PDFData(søker.fnr, land.land(), søker.navn, periode))
 internal fun UtenlandsSøknadKafka.pdf(pdf: PDFGeneratorClient) = pdf.generate(this)
 private fun CountryCode.land() = toLocale().displayCountry
+
 internal data class PDFData(val fødselsnummer: Fødselsnummer,
                             val land: String, @get:JsonUnwrapped val navn: Navn?,
                             @get:JsonUnwrapped val periode: Periode,
