@@ -21,7 +21,6 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder
 import org.springframework.kafka.listener.CommonLoggingErrorHandler
-import org.springframework.kafka.listener.LoggingErrorHandler
 import org.springframework.stereotype.Component
 import org.zalando.problem.jackson.ProblemModule
 import javax.servlet.ServletException
