@@ -21,11 +21,11 @@ import org.springframework.web.reactive.function.client.bodyToMono
 import java.time.LocalDate
 
 @Component
-class PDFGeneratorAdapter(@Qualifier(PDFGEN) client: WebClient, val cf: PDFGeneratorConfig, val mapper: ObjectMapper) : AbstractWebClientAdapter(client, cf) {
+class PDFGeneratorAdapter(@Qualifier(PDFGEN) client: WebClient, override val cfg: PDFGeneratorConfig, val mapper: ObjectMapper) : AbstractWebClientAdapter(client, cfg) {
 
-    fun generate(søknad: UtenlandsSøknadKafka): ByteArray? =
+    fun generate(søknad: UtenlandsSøknadKafka) =
         webClient.post()
-            .uri { it.path(cf.path).build() }
+            .uri { it.path(cfg.path).build() }
             .contentType(APPLICATION_JSON)
             .bodyValue(søknad.pdfData(mapper))
             .retrieve()

@@ -14,7 +14,7 @@ class PDFGeneratorConfig @ConstructorBinding constructor(
         @DefaultValue(DEFAULT_BASE_URI) baseUri: URI) : AbstractRestConfig(baseUri, pingPath, enabled) {
 
     companion object {
-        public const val PDFGEN = "PDFGEN"
+        const val PDFGEN = "PDFGEN"
         private const val DEFAULT_BASE_URI = "http://aap-pdfgen"
         private const val DEFAULT_PATH = "api/v1/genpdf/aap-pdfgen/soknad-utland"
         private const val DEFAULT_PING_PATH = "/"

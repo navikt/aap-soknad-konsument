@@ -13,7 +13,7 @@ import org.springframework.web.reactive.function.client.WebClient
 import org.springframework.web.reactive.function.client.bodyToMono
 
 @Component
- class JoarkClientAdapter internal constructor(@Qualifier(JOARK) webClient: WebClient, cfg: JoarkConfig) : AbstractWebClientAdapter(webClient, cfg) {
+ class JoarkClientAdapter (@Qualifier(JOARK) webClient: WebClient, cfg: JoarkConfig) : AbstractWebClientAdapter(webClient, cfg) {
   fun opprettJournalpost(journalpost: Journalpost) =
        webClient.post()
         .contentType(APPLICATION_JSON)

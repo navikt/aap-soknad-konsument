@@ -10,12 +10,11 @@ import java.net.URI
 class JoarkConfig @ConstructorBinding constructor(
         @DefaultValue(DEFAULT_PING_PATH) pingPath: String,
         @DefaultValue("true") enabled: Boolean,
-        @DefaultValue(DEFAULT_BASE_URI) baseUri: URI) : AbstractRestConfig(baseUri, pingPath, enabled) {
+        baseUri: URI) : AbstractRestConfig(baseUri, pingPath, enabled) {
 
     override fun toString() = "${javaClass.simpleName} [pingPath=$pingPath,enabled=$isEnabled,baseUri=$baseUri]"
 
     companion object {
-        private const val DEFAULT_BASE_URI = "https://aap-fss-proxy.dev-fss-pub.nais.io/joark/aad"
         private const val DEFAULT_PING_PATH = "/"
     }
 }
