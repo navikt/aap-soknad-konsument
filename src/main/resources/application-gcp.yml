@@ -33,6 +33,9 @@ spring:
       properties:
         spring:
           deserializer:
+            key:
+              delegate:
+                class: org.springframework.kafka.support.serializer.JsonDeserializer
             value:
               delegate:
                 class: org.springframework.kafka.support.serializer.JsonDeserializer
@@ -40,7 +43,7 @@ spring:
             trusted:
               packages: no.nav.aap.api.felles
       auto-offset-reset: latest
-      key-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      key-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
       value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
       group-id: utland
 no.nav:
