@@ -9,7 +9,6 @@ import no.nav.aap.joark.DokumentVariant
 import no.nav.aap.joark.Journalpost
 import no.nav.aap.søknadkonsument.joark.JoarkClient
 import no.nav.aap.søknadkonsument.joark.pdf.PDFGeneratorClient
-import no.nav.aap.søknadkonsument.joark.pdf.pdf
 import no.nav.aap.util.LoggerUtil
 import no.nav.aap.util.MDCUtil
 import no.nav.aap.util.MDCUtil.NAV_CALL_ID
@@ -44,5 +43,6 @@ class KafkaSøknadKonsument(val joark: JoarkClient, val pdfGen: PDFGeneratorClie
                 Dokument(
                         "Søknad om å beholde AAP ved opphold i utlandet",
                         "NAV 11-03.07",
-                        listOf(DokumentVariant(fysiskDokument = søknad.pdf(pdfGen)))))
+                        listOf(DokumentVariant(fysiskDokument = pdfGen.generate(søknad)))))
+
 }

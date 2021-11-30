@@ -19,6 +19,7 @@ import org.springframework.web.reactive.function.client.ClientResponse
 import org.springframework.web.reactive.function.client.WebClient
 import org.springframework.web.reactive.function.client.bodyToMono
 import java.time.LocalDate
+import java.time.LocalDate.now
 
 @Component
 class PDFGeneratorAdapter(@Qualifier(PDFGEN) client: WebClient, override val cfg: PDFGeneratorConfig, val mapper: ObjectMapper) : AbstractWebClientAdapter(client, cfg) {
@@ -34,13 +35,12 @@ class PDFGeneratorAdapter(@Qualifier(PDFGEN) client: WebClient, override val cfg
             .block()
     }
 
-internal fun UtenlandsSøknadKafka.pdfData(m: ObjectMapper) = m.writeValueAsString(PDFData(søker.fnr, land.land(), søker.navn, periode))
-internal fun UtenlandsSøknadKafka.pdf(pdf: PDFGeneratorClient) = pdf.generate(this)
+private  fun UtenlandsSøknadKafka.pdfData(m: ObjectMapper) = m.writeValueAsString(PDFData(søker.fnr, land.land(), søker.navn, periode))
 private fun CountryCode.land() = toLocale().displayCountry
 
-internal data class PDFData(val fødselsnummer: Fødselsnummer,
+private data class PDFData(val fødselsnummer: Fødselsnummer,
                             val land: String, @get:JsonUnwrapped val navn: Navn?,
                             @get:JsonUnwrapped val periode: Periode,
                             @get:JsonFormat(
                                     shape = STRING,
-                                    pattern = "dd.MM.yyyy") val dato: LocalDate = LocalDate.now())
+                                    pattern = "dd.MM.yyyy") val dato: LocalDate = now())
