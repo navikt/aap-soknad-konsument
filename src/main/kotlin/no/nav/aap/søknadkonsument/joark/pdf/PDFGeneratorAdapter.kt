@@ -22,11 +22,11 @@ import java.time.LocalDate
 import java.time.LocalDate.now
 
 @Component
-class PDFGeneratorAdapter(@Qualifier(PDFGEN) client: WebClient, override val cfg: PDFGeneratorConfig, val mapper: ObjectMapper) : AbstractWebClientAdapter(client, cfg) {
+class PDFGeneratorAdapter(@Qualifier(PDFGEN) client: WebClient,  val cf: PDFGeneratorConfig, val mapper: ObjectMapper) : AbstractWebClientAdapter(client, cf) {
 
     fun generate(søknad: UtenlandsSøknadKafka) =
         webClient.post()
-            .uri { it.path(cfg.path).build() }
+            .uri { it.path(cf.path).build() }
             .contentType(APPLICATION_JSON)
             .bodyValue(søknad.pdfData(mapper))
             .retrieve()
