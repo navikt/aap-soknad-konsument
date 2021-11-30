@@ -6,6 +6,7 @@ import no.nav.aap.søknadkonsument.rest.aad.AADFilterFunction
 import no.nav.aap.util.Constants.JOARK
 import no.nav.boot.conditionals.EnvUtil.isDevOrLocal
 import org.springframework.beans.factory.annotation.Qualifier
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.core.env.Environment
@@ -15,13 +16,17 @@ import reactor.netty.http.client.HttpClient
 
 @Configuration
 class JoarkClientConfig  {
+    @Value("\${spring.application.name}")
+    private lateinit var applicationName: String
+
     @Qualifier(JOARK)
     @Bean
     fun webClientJoark(builder: WebClient.Builder, cfg: JoarkConfig, aadFilterFunction: AADFilterFunction, env: Environment) =
+
          builder
             .clientConnector(ReactorClientHttpConnector(HttpClient.create().wiretap(isDevOrLocal(env))))
             .baseUrl(cfg.baseUri.toString())
-            .filter(correlatingFilterFunction())
+            .filter(correlatingFilterFunction(applicationName))
             .filter(temaFilterFunction())
             .filter(aadFilterFunction)
             .build()
