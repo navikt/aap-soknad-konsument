@@ -19,6 +19,7 @@ import org.springframework.boot.actuate.trace.http.HttpExchangeTracer
 import org.springframework.boot.actuate.trace.http.HttpTraceRepository
 import org.springframework.boot.actuate.trace.http.InMemoryHttpTraceRepository
 import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer
+import org.springframework.boot.info.BuildProperties
 import org.springframework.context.ApplicationContext
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -41,15 +42,15 @@ class FellesRestBeanConfig {
     fun httpTraceRepository(): HttpTraceRepository = InMemoryHttpTraceRepository()
 
     @Bean
-    fun swagger() =
+    fun swagger(p: BuildProperties) =
         OpenAPI().info(
                 Info().title("AAP søknadfordeler")
                     .description("Fordeling av søknader")
-                    .version("v0.0.1")
+                    .version(p.version)
                     .license(License().name("MIT").url("http://www.nav.no")))
 
     @Bean
-    fun errorHandler(): CommonLoggingErrorHandler  = CommonLoggingErrorHandler()
+    fun errorHandler()  = CommonLoggingErrorHandler()
 
     @Bean
     fun configMatcher() = object : TokenXConfigMatcher {
