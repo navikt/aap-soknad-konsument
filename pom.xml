@@ -15,6 +15,7 @@
     <description>aap-soknad-konsument</description>
     <properties>
         <conditionals.version>2.0.13</conditionals.version>
+        <domain.version>0.0.20</domain.version>
         <i18n.version>1.29</i18n.version>
         <java.version>17</java.version>
         <kotlin.version>1.6.0</kotlin.version>
@@ -33,7 +34,7 @@
         <dependency>
             <groupId>no.nav.aap</groupId>
             <artifactId>aap-domain</artifactId>
-            <version>0.0.15</version>
+            <version>${domain.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

@@ -5,26 +5,27 @@ import com.fasterxml.jackson.module.kotlin.KotlinModule
 import io.swagger.v3.oas.models.OpenAPI
 import io.swagger.v3.oas.models.info.Info
 import io.swagger.v3.oas.models.info.License
-import no.nav.aap.rest.TokenXModule
+import no.nav.aap.rest.ActuatorIgnoringTraceRequestFilter
+import no.nav.aap.rest.tokenx.TokenXConfigMatcher
+import no.nav.aap.rest.tokenx.TokenXFilterFunction
+import no.nav.aap.rest.tokenx.TokenXJacksonModule
 import no.nav.aap.util.AuthContext
-import no.nav.aap.util.TimeUtil
+import no.nav.aap.util.StartupInfoContributor
 import no.nav.boot.conditionals.ConditionalOnDevOrLocal
+import no.nav.security.token.support.client.core.oauth2.OAuth2AccessTokenService
+import no.nav.security.token.support.client.spring.ClientConfigurationProperties
 import no.nav.security.token.support.core.context.TokenValidationContextHolder
-import org.springframework.boot.actuate.info.InfoContributor
 import org.springframework.boot.actuate.trace.http.HttpExchangeTracer
 import org.springframework.boot.actuate.trace.http.HttpTraceRepository
 import org.springframework.boot.actuate.trace.http.InMemoryHttpTraceRepository
-import org.springframework.boot.actuate.web.trace.servlet.HttpTraceFilter
 import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer
 import org.springframework.context.ApplicationContext
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder
 import org.springframework.kafka.listener.CommonLoggingErrorHandler
-import org.springframework.stereotype.Component
 import org.zalando.problem.jackson.ProblemModule
-import javax.servlet.ServletException
-import javax.servlet.http.HttpServletRequest
+import java.net.URI
 
 
 @Configuration
@@ -32,7 +33,7 @@ class FellesRestBeanConfig {
     @Bean
     fun customizer(): Jackson2ObjectMapperBuilderCustomizer =
         Jackson2ObjectMapperBuilderCustomizer { b: Jackson2ObjectMapperBuilder ->
-            b.modules(ProblemModule(), JavaTimeModule(), TokenXModule(),KotlinModule.Builder().build())
+            b.modules(ProblemModule(), JavaTimeModule(), TokenXJacksonModule(),KotlinModule.Builder().build())
         }
 
     @Bean
@@ -47,29 +48,24 @@ class FellesRestBeanConfig {
                     .version("v0.0.1")
                     .license(License().name("MIT").url("http://www.nav.no")))
 
-
-    @ConditionalOnDevOrLocal
-    class ActuatorIgnoringTraceRequestFilter(repository: HttpTraceRepository?, tracer: HttpExchangeTracer?) :
-        HttpTraceFilter(repository, tracer) {
-        @Throws(ServletException::class)
-        override fun shouldNotFilter(request: HttpServletRequest): Boolean {
-            return request.servletPath.contains("actuator") || request.servletPath.contains("swagger")
-        }
-    }
-
     @Bean
     fun errorHandler(): CommonLoggingErrorHandler  = CommonLoggingErrorHandler()
 
     @Bean
+    fun configMatcher() = object : TokenXConfigMatcher {
+        override fun findProperties(configs: ClientConfigurationProperties, uri: URI) = configs.registration["clientcredentials"]
+    }
+    @Bean
     fun authContext(ctxHolder: TokenValidationContextHolder) = AuthContext(ctxHolder)
 
+    @Bean
+    fun tokenXFilterFunction(configs: ClientConfigurationProperties, service: OAuth2AccessTokenService, matcher: TokenXConfigMatcher, authContext: AuthContext) = TokenXFilterFunction(configs, service, matcher, authContext)
 
-    @Component
-    class StartupInfoContributor(val ctx: ApplicationContext) : InfoContributor {
-        override fun contribute(builder: org.springframework.boot.actuate.info.Info.Builder) {
-            builder.withDetail(
-                    "extra-info", mapOf(
-                    "Startup time" to TimeUtil.format(ctx.startupDate)))
-        }
-    }
+    @Bean
+    @ConditionalOnDevOrLocal
+    fun actuatorIgnoringTraceRequestFilter(repo: HttpTraceRepository, tracer: HttpExchangeTracer?) = ActuatorIgnoringTraceRequestFilter(repo,tracer)
+
+    @Bean
+    fun startupInfoContributor(ctx: ApplicationContext) =  StartupInfoContributor(ctx)
+
 }
