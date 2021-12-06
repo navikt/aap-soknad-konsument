@@ -1,5 +1,6 @@
 package no.nav.aap.søknadkonsument.joark
 
+import no.nav.aap.health.AbstractPingableHealthIndicator
 import no.nav.aap.rest.AbstractWebClientAdapter.Companion.correlatingFilterFunction
 import no.nav.aap.rest.AbstractWebClientAdapter.Companion.temaFilterFunction
 import no.nav.aap.søknadkonsument.rest.AADFilterFunction
@@ -27,4 +28,8 @@ class JoarkClientConfig( @Value("\${spring.application.name}") val applicationNa
             .filter(temaFilterFunction())
             .filter(aadFilterFunction)
             .build()
+
+    @Bean
+    fun joarkHealthIndicator(adapter: JoarkClientAdapter) = object : AbstractPingableHealthIndicator(adapter) {
+    }
 }

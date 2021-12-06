@@ -15,6 +15,6 @@ class JoarkConfig @ConstructorBinding constructor(
     override fun toString() = "${javaClass.simpleName} [pingPath=$pingPath,enabled=$isEnabled,baseUri=$baseUri]"
 
     companion object {
-        private const val DEFAULT_PING_PATH = "/"
+        private const val DEFAULT_PING_PATH = "actuator/iaAlive"
     }
 }
