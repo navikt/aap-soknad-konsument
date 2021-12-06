@@ -8,6 +8,7 @@ import java.net.URI
 
 @ConfigurationProperties(prefix = "joark")
 class JoarkConfig @ConstructorBinding constructor(
+        @DefaultValue("/joark/aad") val joarkPath: String,
         @DefaultValue(DEFAULT_PING_PATH) pingPath: String,
         @DefaultValue("true") enabled: Boolean,
         baseUri: URI) : AbstractRestConfig(baseUri, pingPath, enabled) {

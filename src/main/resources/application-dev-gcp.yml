@@ -9,4 +9,4 @@ management :
 mvc:
   log-request-details : true
 joark:
-  base-uri: https://aap-fss-proxy.dev-fss-pub.nais.io/joark/aad
+  base-uri: https://aap-fss-proxy.dev-fss-pub.nais.io
