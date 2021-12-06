@@ -2,7 +2,7 @@ package no.nav.aap.søknadkonsument.joark
 
 import no.nav.aap.rest.AbstractWebClientAdapter.Companion.correlatingFilterFunction
 import no.nav.aap.rest.AbstractWebClientAdapter.Companion.temaFilterFunction
-import no.nav.aap.rest.tokenx.TokenXFilterFunction
+import no.nav.aap.søknadkonsument.rest.AADFilterFunction
 import no.nav.aap.util.Constants.JOARK
 import no.nav.boot.conditionals.EnvUtil.isDevOrLocal
 import org.springframework.beans.factory.annotation.Qualifier
@@ -19,7 +19,7 @@ class JoarkClientConfig( @Value("\${spring.application.name}") val applicationNa
 
     @Qualifier(JOARK)
     @Bean
-    fun webClientJoark(builder: WebClient.Builder, cfg: JoarkConfig, aadFilterFunction: TokenXFilterFunction, env: Environment) =
+    fun webClientJoark(builder: WebClient.Builder, cfg: JoarkConfig, aadFilterFunction: AADFilterFunction, env: Environment) =
          builder
             .clientConnector(ReactorClientHttpConnector(HttpClient.create().wiretap(isDevOrLocal(env))))
             .baseUrl(cfg.baseUri.toString())

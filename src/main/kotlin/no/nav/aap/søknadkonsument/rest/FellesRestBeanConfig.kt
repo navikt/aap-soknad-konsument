@@ -7,7 +7,6 @@ import io.swagger.v3.oas.models.info.Info
 import io.swagger.v3.oas.models.info.License
 import no.nav.aap.rest.ActuatorIgnoringTraceRequestFilter
 import no.nav.aap.rest.tokenx.TokenXConfigMatcher
-import no.nav.aap.rest.tokenx.TokenXFilterFunction
 import no.nav.aap.rest.tokenx.TokenXJacksonModule
 import no.nav.aap.util.AuthContext
 import no.nav.aap.util.StartupInfoContributor
@@ -60,7 +59,7 @@ class FellesRestBeanConfig {
     fun authContext(ctxHolder: TokenValidationContextHolder) = AuthContext(ctxHolder)
 
     @Bean
-    fun tokenXFilterFunction(configs: ClientConfigurationProperties, service: OAuth2AccessTokenService, matcher: TokenXConfigMatcher, authContext: AuthContext) = TokenXFilterFunction(configs, service, matcher, authContext)
+    fun aadFilterFunction(configs: ClientConfigurationProperties, service: OAuth2AccessTokenService, matcher: TokenXConfigMatcher, authContext: AuthContext) = AADFilterFunction(configs, service, matcher)
 
     @Bean
     @ConditionalOnDevOrLocal
