@@ -13,7 +13,7 @@ class JoarkConfig @ConstructorBinding constructor(
         @DefaultValue("true") enabled: Boolean,
         baseUri: URI) : AbstractRestConfig(baseUri, pingPath, enabled) {
 
-    override fun toString() = "${javaClass.simpleName} [pingPath=$pingPath,enabled=$isEnabled,baseUri=$baseUri]"
+    override fun toString() = "${javaClass.simpleName} [pingPath=$pingPath,joarkPath=$joarkPath,enabled=$isEnabled,baseUri=$baseUri]"
 
     companion object {
         private const val DEFAULT_PING_PATH = "actuator/health/liveness"
