@@ -1,8 +1,8 @@
 package no.nav.aap.søknadkonsument.rest
 
 import no.nav.aap.rest.tokenx.TokenXConfigMatcher
-import no.nav.aap.util.AuthContext
 import no.nav.aap.util.LoggerUtil
+import no.nav.aap.util.StringExtensions.asBearer
 import no.nav.boot.conditionals.EnvUtil.CONFIDENTIAL
 import no.nav.security.token.support.client.core.oauth2.OAuth2AccessTokenService
 import no.nav.security.token.support.client.spring.ClientConfigurationProperties
@@ -21,7 +21,6 @@ class AADFilterFunction  (
         private val matcher: TokenXConfigMatcher) : ExchangeFilterFunction {
 
     private val log = LoggerUtil.getLogger(javaClass)
-    private val secureLog = LoggerUtil.getSecureLogger();
     override fun filter(req: ClientRequest, next: ExchangeFunction): Mono<ClientResponse> {
         val url = req.url()
         log.trace("Sjekker token exchange for {}", url)
@@ -29,9 +28,9 @@ class AADFilterFunction  (
         if (cfg != null) {
             log.trace(CONFIDENTIAL, "Gjør token exchange for {} med konfig {}", url, cfg)
             val token = service.getAccessToken(cfg).accessToken
-            log.trace("Token exchange for {} OK", url)
+            log.info("Token exchange for {} OK", url)
             log.trace(CONFIDENTIAL,"Token er {}",token)
-            return next.exchange(ClientRequest.from(req).header(AUTHORIZATION, AuthContext.bearerToken(token)).build())
+            return next.exchange(ClientRequest.from(req).header(AUTHORIZATION, token.asBearer()).build())
         }
         log.trace("Ingen token exchange for {}", url)
         return next.exchange(ClientRequest.from(req).build())
