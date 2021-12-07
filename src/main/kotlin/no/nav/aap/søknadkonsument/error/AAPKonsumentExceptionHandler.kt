@@ -3,7 +3,6 @@ package no.nav.aap.søknadkonsument.error
 import no.nav.aap.util.AuthContext
 import no.nav.security.token.support.core.exceptions.JwtTokenMissingException
 import no.nav.security.token.support.spring.validation.interceptor.JwtTokenUnauthorizedException
-import org.springframework.core.env.Environment
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
@@ -22,7 +21,7 @@ import org.zalando.problem.spring.web.advice.ProblemHandling
 
 
 @ControllerAdvice
-class AAPKonsumentExceptionHandler(val authContext: AuthContext, private val env: Environment) : ProblemHandling {
+class AAPKonsumentExceptionHandler(val authContext: AuthContext) : ProblemHandling {
 
     @ExceptionHandler(JwtTokenUnauthorizedException::class, JwtTokenMissingException::class)
     fun handleMissingOrExpiredToken(e: java.lang.Exception, req: NativeWebRequest): ResponseEntity<Problem> =
