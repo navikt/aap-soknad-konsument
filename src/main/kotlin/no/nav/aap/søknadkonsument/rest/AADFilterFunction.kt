@@ -1,5 +1,6 @@
 package no.nav.aap.søknadkonsument.rest
 
+import no.nav.aap.api.felles.error.IntegrationException
 import no.nav.aap.rest.tokenx.TokenXConfigMatcher
 import no.nav.aap.util.LoggerUtil
 import no.nav.aap.util.StringExtensions.asBearer
@@ -32,8 +33,7 @@ class AADFilterFunction  (
             log.trace(CONFIDENTIAL,"Token er {}",token)
             return next.exchange(ClientRequest.from(req).header(AUTHORIZATION, token.asBearer()).build())
         }
-        log.trace("Ingen token exchange for {}", url)
-        return next.exchange(ClientRequest.from(req).build())
+        throw IntegrationException("Ingen konfig funnet",url,null)
     }
 
     override fun toString() = "${javaClass.simpleName} [[configs=$configs,service=$service,matcher=$matcher]"
