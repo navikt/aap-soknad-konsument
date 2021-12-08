@@ -29,7 +29,7 @@ spec:
       expr: absent(up{app=~"aap-soknad-konsument",job="kubernetes-pods"})
       for: 2m
       description: "{{ $labels.app }} rapporterer ingen metrikker i {{ $labels.kubernetes_namespace }}"
-      action: "Sjekk om {{ $labels.app }} i \{{ $labels.kubernetes_namespace }} er oppe"
+      action: "Sjekk om {{ $labels.app }} i {{ $labels.kubernetes_namespace }} er oppe"
       sla: respond within 1h, during office hours
       severity: danger
     - alert: høy feilrate i logger
