@@ -25,6 +25,7 @@
         <okhttp3.version>4.9.1</okhttp3.version>
         <problem.version>0.27.0</problem.version>
         <reactor.version>1.0.1.RELEASE</reactor.version>
+        <sonar.projectKey>navikt_aap-soeknad-konsument</sonar.projectKey>
         <sonar.organization>navit</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
         <springdoc.version>1.5.12</springdoc.version>
