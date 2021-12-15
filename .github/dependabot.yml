@@ -12,10 +12,10 @@ updates:
     registries:
       - maven-github
     schedule:
-      interval: "hourly"
+      interval: "daily"
     open-pull-requests-limit: 10
  - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "hourly"
+      interval: "daily"
     open-pull-requests-limit: 10
