@@ -15,7 +15,7 @@
     <name>aap-soknad-api</name>
     <description>aap-soknad-konsument</description>
     <properties>
-        <conditionals.version>2.0.13</conditionals.version>
+        <conditionals.version>2.0.16</conditionals.version>
         <domain.version>0.0.27</domain.version>
         <i18n.version>1.29</i18n.version>
         <java.version>17</java.version>
