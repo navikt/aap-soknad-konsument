@@ -27,6 +27,8 @@ management :
     env:
       enabled: true
   health:
+    refresh:
+      enabled: false
     ping:
       enabled: false
     diskspace:
