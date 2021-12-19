@@ -24,4 +24,5 @@ import org.springframework.retry.annotation.EnableRetry
             .applicationStartup(BufferingApplicationStartup(4096))
             .main(AAPSøknadKonsumentApplication::class.java)
             .run(*args)
- }
+    }
+}
