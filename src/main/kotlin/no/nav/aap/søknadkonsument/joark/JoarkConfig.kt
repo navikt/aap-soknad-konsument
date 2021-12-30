@@ -5,9 +5,9 @@ import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.boot.context.properties.ConstructorBinding
 import org.springframework.boot.context.properties.bind.DefaultValue
 import java.net.URI
-
 @ConfigurationProperties(prefix = "joark")
-class JoarkConfig @ConstructorBinding constructor(
+@ConstructorBinding
+class JoarkConfig  (
         @DefaultValue("/joark/aad") val joarkPath: String,
         @DefaultValue(DEFAULT_PING_PATH) pingPath: String,
         @DefaultValue("true") enabled: Boolean,
