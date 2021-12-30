@@ -7,7 +7,8 @@ import org.springframework.boot.context.properties.bind.DefaultValue
 import java.net.URI
 
 @ConfigurationProperties(prefix = "pdf")
-class PDFGeneratorConfig @ConstructorBinding constructor(
+@ConstructorBinding
+class PDFGeneratorConfig(
         @DefaultValue(DEFAULT_PING_PATH) pingPath: String,
         @DefaultValue(DEFAULT_PATH) val path: String,
         @DefaultValue("true") enabled: Boolean,
