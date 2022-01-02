@@ -22,6 +22,6 @@ import org.springframework.boot.context.metrics.buffering.BufferingApplicationSt
 	      SpringApplicationBuilder(AAPSøknadKonsumentApplication::class.java)
        		.profiles(*profiler())
         	.applicationStartup(BufferingApplicationStartup(4096))
-    	    .main(AAPSøknadKonsumentApplication::class.java)
+    	        .main(AAPSøknadKonsumentApplication::class.java)
 	       	.run(*args)
 }
