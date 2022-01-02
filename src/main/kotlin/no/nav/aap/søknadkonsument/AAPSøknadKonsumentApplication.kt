@@ -8,6 +8,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan
 import org.springframework.kafka.annotation.EnableKafka
 import org.springframework.retry.annotation.EnableRetry
+import org.springframework.boot.context.metrics.buffering.BufferingApplicationStartup
 
 
 @SpringBootApplication
@@ -17,13 +18,10 @@ import org.springframework.retry.annotation.EnableRetry
 @EnableRetry
 @EnableKafka
  class  AAPSøknadKonsumentApplication {
-    companion object {
-        @JvmStatic
-        fun main(args: Array<String>) {
-            SpringApplicationBuilder(AAPSøknadKonsumentApplication::class.java)
-                .profiles(*profiler())
-                .main(AAPSøknadKonsumentApplication::class.java)
-                .run(*args)
-        }
-    }
+   fun main(args: Array<String>) {
+	      SpringApplicationBuilder(AAPSøknadKonsumentApplication::class.java)
+       		.profiles(*profiler())
+        	.applicationStartup(BufferingApplicationStartup(4096))
+    	    .main(AAPSøknadKonsumentApplication::class.java)
+	       	.run(*args)
 }
