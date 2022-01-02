@@ -17,8 +17,8 @@ import org.springframework.boot.context.metrics.buffering.BufferingApplicationSt
 @ConfigurationPropertiesScan
 @EnableRetry
 @EnableKafka
- class  AAPSøknadKonsumentApplication {
-   fun main(args: Array<String>) {
+ class  AAPSøknadKonsumentApplication 
+    fun main(args: Array<String>) {
 	      SpringApplicationBuilder(AAPSøknadKonsumentApplication::class.java)
        		.profiles(*profiler())
         	.applicationStartup(BufferingApplicationStartup(4096))
