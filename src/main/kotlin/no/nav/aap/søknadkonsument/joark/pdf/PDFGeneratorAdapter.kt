@@ -22,7 +22,8 @@ import java.time.LocalDate
 import java.time.LocalDate.now
 
 @Component
-class PDFGeneratorAdapter(@Qualifier(PDFGEN) client: WebClient,  val cf: PDFGeneratorConfig, val mapper: ObjectMapper) : AbstractWebClientAdapter(client, cf) {
+class PDFGeneratorAdapter(@Qualifier(PDFGEN) client: WebClient, val cf: PDFGeneratorConfig, val mapper: ObjectMapper) :
+    AbstractWebClientAdapter(client, cf) {
 
     fun generate(søknad: UtenlandsSøknadKafka) =
         webClient.post()
@@ -33,14 +34,16 @@ class PDFGeneratorAdapter(@Qualifier(PDFGEN) client: WebClient,  val cf: PDFGene
             .onStatus({ obj: HttpStatus -> obj.isError }) { obj: ClientResponse -> obj.createException() }
             .bodyToMono<ByteArray>()
             .block()
-    }
+}
 
-private  fun UtenlandsSøknadKafka.pdfData(m: ObjectMapper) = m.writeValueAsString(PDFData(søker.fnr, land.land(), søker.navn, periode))
+private fun UtenlandsSøknadKafka.pdfData(m: ObjectMapper) =
+    m.writeValueAsString(PDFData(søker.fnr, land.land(), søker.navn, periode))
+
 private fun CountryCode.land() = toLocale().displayCountry
 
 private data class PDFData(val fødselsnummer: Fødselsnummer,
-                            val land: String, @get:JsonUnwrapped val navn: Navn?,
-                            @get:JsonUnwrapped val periode: Periode,
-                            @get:JsonFormat(
-                                    shape = STRING,
-                                    pattern = "dd.MM.yyyy") val dato: LocalDate = now())
+                           val land: String, @get:JsonUnwrapped val navn: Navn?,
+                           @get:JsonUnwrapped val periode: Periode,
+                           @get:JsonFormat(
+                                   shape = STRING,
+                                   pattern = "dd.MM.yyyy") val dato: LocalDate = now())

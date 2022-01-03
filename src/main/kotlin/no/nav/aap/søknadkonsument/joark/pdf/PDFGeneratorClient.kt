@@ -5,6 +5,6 @@ import org.springframework.stereotype.Component
 import java.util.Base64.getEncoder
 
 @Component
-class PDFGeneratorClient(val adapter: PDFGeneratorAdapter)  {
-    fun generate(søknad: UtenlandsSøknadKafka)  = getEncoder().encodeToString(adapter.generate(søknad))
+class PDFGeneratorClient(val adapter: PDFGeneratorAdapter) {
+    fun generate(søknad: UtenlandsSøknadKafka) = getEncoder().encodeToString(adapter.generate(søknad))
 }

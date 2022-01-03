@@ -16,7 +16,7 @@ import org.springframework.web.reactive.function.client.ExchangeFunction
 import reactor.core.publisher.Mono
 
 @Component
-class AADFilterFunction  (
+class AADFilterFunction(
         private val configs: ClientConfigurationProperties,
         private val service: OAuth2AccessTokenService,
         private val matcher: TokenXConfigMatcher) : ExchangeFilterFunction {
@@ -30,10 +30,10 @@ class AADFilterFunction  (
             log.trace(CONFIDENTIAL, "Gjør token exchange for {} med konfig {}", url, cfg)
             val token = service.getAccessToken(cfg).accessToken
             log.info("Token exchange for {} OK", url)
-            log.trace(CONFIDENTIAL,"Token er {}",token)
+            log.trace(CONFIDENTIAL, "Token er {}", token)
             return next.exchange(ClientRequest.from(req).header(AUTHORIZATION, token.asBearer()).build())
         }
-        throw IntegrationException("Ingen konfig funnet",url,null)
+        throw IntegrationException("Ingen konfig funnet", url, null)
     }
 
     override fun toString() = "${javaClass.simpleName} [[configs=$configs,service=$service,matcher=$matcher]"

@@ -17,6 +17,7 @@ import reactor.netty.http.client.HttpClient
 class PdfGeneratorkClientConfig {
     @Value("\${spring.application.name}")
     private lateinit var applicationName: String
+
     @Qualifier(PDFGEN)
     @Bean
     fun webClientPdfGen(builder: WebClient.Builder, cfg: PDFGeneratorConfig, env: Environment) =

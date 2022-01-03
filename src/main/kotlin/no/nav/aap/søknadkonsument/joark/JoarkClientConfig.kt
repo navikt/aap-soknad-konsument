@@ -16,12 +16,15 @@ import org.springframework.web.reactive.function.client.WebClient
 import reactor.netty.http.client.HttpClient
 
 @Configuration
-class JoarkClientConfig( @Value("\${spring.application.name}") val applicationName: String)  {
+class JoarkClientConfig(@Value("\${spring.application.name}") val applicationName: String) {
 
     @Qualifier(JOARK)
     @Bean
-    fun webClientJoark(builder: WebClient.Builder, cfg: JoarkConfig, aadFilterFunction: AADFilterFunction, env: Environment) =
-         builder
+    fun webClientJoark(builder: WebClient.Builder,
+                       cfg: JoarkConfig,
+                       aadFilterFunction: AADFilterFunction,
+                       env: Environment) =
+        builder
             .clientConnector(ReactorClientHttpConnector(HttpClient.create().wiretap(isDevOrLocal(env))))
             .baseUrl(cfg.baseUri.toString())
             .filter(correlatingFilterFunction(applicationName))

@@ -33,7 +33,7 @@ class FellesRestBeanConfig {
     @Bean
     fun customizer(): Jackson2ObjectMapperBuilderCustomizer =
         Jackson2ObjectMapperBuilderCustomizer { b: Jackson2ObjectMapperBuilder ->
-            b.modules(ProblemModule(), JavaTimeModule(), TokenXJacksonModule(),KotlinModule.Builder().build())
+            b.modules(ProblemModule(), JavaTimeModule(), TokenXJacksonModule(), KotlinModule.Builder().build())
         }
 
     @Bean
@@ -49,23 +49,29 @@ class FellesRestBeanConfig {
                     .license(License().name("MIT").url("http://www.nav.no")))
 
     @Bean
-    fun errorHandler()  = CommonLoggingErrorHandler()
+    fun errorHandler() = CommonLoggingErrorHandler()
 
     @Bean
     fun configMatcher() = object : TokenXConfigMatcher {
-        override fun findProperties(configs: ClientConfigurationProperties, uri: URI) = configs.registration["clientcredentials"]
+        override fun findProperties(configs: ClientConfigurationProperties, uri: URI) =
+            configs.registration["clientcredentials"]
     }
+
     @Bean
     fun authContext(ctxHolder: TokenValidationContextHolder) = AuthContext(ctxHolder)
 
     @Bean
-    fun aadFilterFunction(configs: ClientConfigurationProperties, service: OAuth2AccessTokenService, matcher: TokenXConfigMatcher, authContext: AuthContext) = AADFilterFunction(configs, service, matcher)
+    fun aadFilterFunction(configs: ClientConfigurationProperties,
+                          service: OAuth2AccessTokenService,
+                          matcher: TokenXConfigMatcher,
+                          authContext: AuthContext) = AADFilterFunction(configs, service, matcher)
 
     @Bean
     @ConditionalOnDevOrLocal
-    fun actuatorIgnoringTraceRequestFilter(repo: HttpTraceRepository, tracer: HttpExchangeTracer?) = ActuatorIgnoringTraceRequestFilter(repo,tracer)
+    fun actuatorIgnoringTraceRequestFilter(repo: HttpTraceRepository, tracer: HttpExchangeTracer?) =
+        ActuatorIgnoringTraceRequestFilter(repo, tracer)
 
     @Bean
-    fun startupInfoContributor(ctx: ApplicationContext) =  StartupInfoContributor(ctx)
+    fun startupInfoContributor(ctx: ApplicationContext) = StartupInfoContributor(ctx)
 
 }

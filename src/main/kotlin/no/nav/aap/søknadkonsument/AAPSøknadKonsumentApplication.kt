@@ -17,14 +17,14 @@ import org.springframework.retry.annotation.EnableRetry
 @ConfigurationPropertiesScan
 @EnableRetry
 @EnableKafka
-class  AAPSøknadKonsumentApplication {
-		companion object {
-			@JvmStatic
-			fun main(args: Array<String>) {
-				SpringApplicationBuilder(AAPSøknadKonsumentApplication::class.java)
-					.profiles(*profiler())
-					.applicationStartup(BufferingApplicationStartup(4096))
-					.run(*args)
-			}
-		}
+class AAPSøknadKonsumentApplication {
+    companion object {
+        @JvmStatic
+        fun main(args: Array<String>) {
+            SpringApplicationBuilder(AAPSøknadKonsumentApplication::class.java)
+                .profiles(*profiler())
+                .applicationStartup(BufferingApplicationStartup(4096))
+                .run(*args)
+        }
+    }
 }

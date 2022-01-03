@@ -28,12 +28,13 @@ class AAPKonsumentExceptionHandler(val authContext: AuthContext) : ProblemHandli
         create(UNAUTHORIZED, e, req)
 
     @ExceptionHandler(WebClientResponseException::class)
-    fun handleWebClientResponseException(e: WebClientResponseException, req: NativeWebRequest): ResponseEntity<Problem> {
+    fun handleWebClientResponseException(e: WebClientResponseException,
+                                         req: NativeWebRequest): ResponseEntity<Problem> {
         return when (e) {
-            is BadRequest -> create(BAD_REQUEST,e,req)
-            is Forbidden, is Unauthorized -> create(UNAUTHORIZED,e,req)
-            is NotFound -> create(NOT_FOUND,e,req)
-            else -> create(INTERNAL_SERVER_ERROR,e,req)
+            is BadRequest -> create(BAD_REQUEST, e, req)
+            is Forbidden, is Unauthorized -> create(UNAUTHORIZED, e, req)
+            is NotFound -> create(NOT_FOUND, e, req)
+            else -> create(INTERNAL_SERVER_ERROR, e, req)
         }
     }
 
