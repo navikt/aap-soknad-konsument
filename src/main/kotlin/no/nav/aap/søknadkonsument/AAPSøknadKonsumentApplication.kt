@@ -22,7 +22,6 @@ class  AAPSøknadKonsumentApplication {
 			fun main(args: Array<String>) {
 				SpringApplicationBuilder(AAPSøknadKonsumentApplication::class.java)
 					.profiles(*profiler())
-					.main(AAPSøknadKonsumentApplication::class.java)
 					.run(*args)
 			}
 		}
