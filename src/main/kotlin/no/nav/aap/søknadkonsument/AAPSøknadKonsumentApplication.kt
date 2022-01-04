@@ -21,6 +21,6 @@ class AAPSøknadKonsumentApplication
 fun main(args: Array<String>) {
     runApplication<AAPSøknadKonsumentApplication>(*args) {
         setAdditionalProfiles(*profiler())
-        setApplicationStartup(BufferingApplicationStartup(4096))
+        applicationStartup = BufferingApplicationStartup(4096)
     }
 }
