@@ -18,9 +18,9 @@ import org.springframework.retry.annotation.EnableRetry
 @EnableRetry
 @EnableKafka
 class AAPSøknadKonsumentApplication
-    fun main(args: Array<String>) {
-        runApplication<AAPSøknadKonsumentApplication>(*args) {
-            setAdditionalProfiles(*profiler())
-            setApplicationStartup(BufferingApplicationStartup(4096))
-        }
+fun main(args: Array<String>) {
+    runApplication<AAPSøknadKonsumentApplication>(*args) {
+        setAdditionalProfiles(*profiler())
+        setApplicationStartup(BufferingApplicationStartup(4096))
     }
+}
