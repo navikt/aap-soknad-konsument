@@ -232,9 +232,6 @@
                      </goals>
                    </execution>
                 </executions>
-                <configuration>
-                    <mainClass>no.nav.aap.søknadkonsument.AAPSøknadKonsumentApplicationKt</mainClass>
-                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.jetbrains.kotlin</groupId>
