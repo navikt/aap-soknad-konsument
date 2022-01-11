@@ -222,6 +222,30 @@
                 </configuration>
             </plugin>
             <plugin>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>jib-maven-plugin</artifactId>
+                <version>${jib.version}</version>
+                <configuration>
+                    <from>
+                        <image>gcr.io/distroless/java17</image>
+                    </from>
+                    <to>
+                        <!--suppress UnresolvedMavenProperty -->
+                        <image>${env.IMAGE}</image>
+                        <auth>
+                            <username>x-access-token</username>
+                            <!--suppress UnresolvedMavenProperty -->
+                            <password>${env.GITHUB_TOKEN}</password>
+                        </auth>
+                    </to>
+                    <container>
+                        <jvmFlags>
+                            <jvmFlag>--enable-preview</jvmFlag>
+                        </jvmFlags>
+                    </container>
+                </configuration>
+            </plugin>
+            <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <executions>
