@@ -1,38 +1,38 @@
 apiVersion: "nais.io/v1"
 kind: "Alert"
 metadata:
-  name: aap-soknad-konsument-alerts
+  name: soknad-konsument-alerts
   labels:
     team: aap
-    app: aap-soknad-konsument
+    app: soknad-konsument
   namespace: aap
 spec:
   receivers:
     slack:
       channel: '#aap-github'
   alerts:
-    - alert: aap-soknad-konsument-app-nede
-      expr: kube_deployment_status_replicas_unavailable{deployment="aap-soknad-konsument",job="kubernetes-service-endpoints"} > 0
+    - alert: soknad-konsument-app-nede
+      expr: kube_deployment_status_replicas_unavailable{deployment="soknad-konsument",job="kubernetes-service-endpoints"} > 0
       for: 5m
-      description: "aap-soknad-konsument har utilgjengelige podder i aap"
-      action: "kubectl describe pod -l app=aap-soknad-konsument -n aap` for events og `kubectl get pods -l app=aap-soknad-konsument -n aap` for å se feilende podder"
+      description: "soknad-konsument har utilgjengelige podder i aap"
+      action: "kubectl describe pod -l app=soknad-konsument -n aap` for events og `kubectl get pods -l app=soknad-konsument -n aap` for å se feilende podder"
       sla: respond within 1h, during office hours
       severity: danger
-    - alert: aap-soknad-konsument-kontinuerlig-restart
-      expr: sum(increase(kube_pod_container_status_restarts_total{container=~"aap-soknad-konsument"}[5m])) by (container) > 2
+    - alert: soknad-konsument-kontinuerlig-restart
+      expr: sum(increase(kube_pod_container_status_restarts_total{container=~"soknad-konsument"}[5m])) by (container) > 2
       for: 2m
-      description: "aap-soknad-konsument har restartet flere ganger de siste 5 minuttene!"
-      action: "Se `kubectl describe pod aap-soknad-konsument` for events, og `kubectl logs aap-soknad-konsument` for logger"
+      description: "soknad-konsument har restartet flere ganger de siste 5 minuttene!"
+      action: "Se `kubectl describe pod soknad-konsument` for events, og `kubectl logs soknad-konsument` for logger"
       sla: respond within 1h, during office hours
       severity: danger
-    - alert: aap-soknad-konsument-mangler-metrikker
-      expr: absent(up{app=~"aap-soknad-konsument",job="kubernetes-pods"})
+    - alert: soknad-konsument-mangler-metrikker
+      expr: absent(up{app=~"soknad-konsument",job="kubernetes-pods"})
       for: 2m
-      description: "aap-soknad-konsument rapporterer ingen metrikker i aap"
-      action: "Sjekk om aap-soknad-konsument i aap er oppe"
+      description: "soknad-konsument rapporterer ingen metrikker i aap"
+      action: "Sjekk om soknad-konsument i aap er oppe"
       sla: respond within 1h, during office hours
       severity: danger
     - alert: høy feilrate i logger
-      expr: (100 * sum by (log_app, log_namespace) (rate(logd_messages_total{log_app="aap-soknad-konsument",log_level=~"Error"}[10m])) / sum by (log_app, log_namespace) (rate(logd_messages_total{log_app="aap-soknad-konsument"}[10m]))) > 15
+      expr: (100 * sum by (log_app, log_namespace) (rate(logd_messages_total{log_app="soknad-konsument",log_level=~"Error"}[10m])) / sum by (log_app, log_namespace) (rate(logd_messages_total{log_app="soknad-konsument"}[10m]))) > 15
       for: 5m
       action: "<https://logs.adeo.no/goto/4dcb5f43d53e90212240667e3e609df4|Check logs>"
