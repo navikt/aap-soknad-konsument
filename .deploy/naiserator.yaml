@@ -4,7 +4,7 @@ metadata:
   annotations:
     nais.io/read-only-file-system: "false"
     nais.io/run-as-user: "1001"
-  name: aap-soknad-konsument
+  name: soknad-konsument
   namespace: aap
   labels:
     team: aap
@@ -12,7 +12,7 @@ spec:
   accessPolicy:
     outbound:
       rules:
-        - application: aap-pdfgen
+        - application: pdfgen
   azure:
     application:
       enabled: true
