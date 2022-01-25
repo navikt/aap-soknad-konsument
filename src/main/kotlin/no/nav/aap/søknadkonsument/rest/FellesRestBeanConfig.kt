@@ -6,13 +6,14 @@ import io.swagger.v3.oas.models.OpenAPI
 import io.swagger.v3.oas.models.info.Info
 import io.swagger.v3.oas.models.info.License
 import no.nav.aap.rest.ActuatorIgnoringTraceRequestFilter
-import no.nav.aap.rest.tokenx.TokenXConfigMatcher
 import no.nav.aap.rest.tokenx.TokenXJacksonModule
 import no.nav.aap.util.AuthContext
 import no.nav.aap.util.StartupInfoContributor
 import no.nav.boot.conditionals.ConditionalOnDevOrLocal
+import no.nav.security.token.support.client.core.ClientProperties
 import no.nav.security.token.support.client.core.oauth2.OAuth2AccessTokenService
 import no.nav.security.token.support.client.spring.ClientConfigurationProperties
+import no.nav.security.token.support.client.spring.oauth2.ClientConfigurationPropertiesMatcher
 import no.nav.security.token.support.core.context.TokenValidationContextHolder
 import org.springframework.boot.actuate.trace.http.HttpExchangeTracer
 import org.springframework.boot.actuate.trace.http.HttpTraceRepository
@@ -26,6 +27,7 @@ import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder
 import org.springframework.kafka.listener.CommonLoggingErrorHandler
 import org.zalando.problem.jackson.ProblemModule
 import java.net.URI
+import java.util.*
 
 
 @Configuration
@@ -52,9 +54,10 @@ class FellesRestBeanConfig {
     fun errorHandler() = CommonLoggingErrorHandler()
 
     @Bean
-    fun configMatcher() = object : TokenXConfigMatcher {
-        override fun findProperties(configs: ClientConfigurationProperties, uri: URI) =
-            configs.registration["clientcredentials"]
+    fun configMatcher() = object : ClientConfigurationPropertiesMatcher {
+        override fun findProperties(configs: ClientConfigurationProperties, uri: URI): Optional<ClientProperties> {
+            return Optional.ofNullable(configs.registration[uri.host.split("\\.".toRegex()).toTypedArray()[0]])
+        }
     }
 
     @Bean
@@ -63,7 +66,7 @@ class FellesRestBeanConfig {
     @Bean
     fun aadFilterFunction(configs: ClientConfigurationProperties,
                           service: OAuth2AccessTokenService,
-                          matcher: TokenXConfigMatcher,
+                          matcher: ClientConfigurationPropertiesMatcher,
                           authContext: AuthContext) = AADFilterFunction(configs, service, matcher)
 
     @Bean
