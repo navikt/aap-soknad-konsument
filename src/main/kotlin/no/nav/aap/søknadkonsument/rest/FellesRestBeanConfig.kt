@@ -63,9 +63,9 @@ class FellesRestBeanConfig(@Value("\${spring.application.name}") val application
     fun errorHandler() = CommonLoggingErrorHandler()
 
     @Bean
-    fun configMatcher() = object : ClientConfigurationPropertiesMatcher {
+    fun configMatcherProxy() = object : ClientConfigurationPropertiesMatcher {
         override fun findProperties(configs: ClientConfigurationProperties, uri: URI): Optional<ClientProperties> {
-            return Optional.ofNullable(configs.registration[uri.host.split("\\.".toRegex()).toTypedArray()[0]])
+            return Optional.ofNullable(configs.registration["clientcredentials-proxy"])
         }
     }
 
