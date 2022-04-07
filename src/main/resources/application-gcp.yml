@@ -38,7 +38,7 @@ spring:
                 class: org.springframework.kafka.support.serializer.JsonDeserializer
             value:
               delegate:
-                class: org.springframework.kafka.support.serializer.JsonDeserializer
+                class: org.apache.kafka.common.serialization.StringDeserializer
           json:
             trusted:
               packages: no.nav.aap.api.felles

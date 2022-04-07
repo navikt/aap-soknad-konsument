@@ -24,10 +24,10 @@ class KafkaSøknadKonsument(val joark: JoarkClient, val pdfGen: PDFGeneratorClie
     @KafkaListener(
             topics = ["#{'\${utenlands.topic:aap.aap-utland-soknad-sendt.v1}'}"],
             groupId = "#{'\${spring.kafka.consumer.group-id}'}")
-    fun konsumer(consumerRecord: ConsumerRecord<Fødselsnummer, UtenlandsSøknadKafka>,
+    fun konsumer(consumerRecord: ConsumerRecord<String, UtenlandsSøknadKafka>,
                  @Header(NAV_CALL_ID) callId: String) {
         MDCUtil.toMDC(NAV_CALL_ID, callId)
-        val fnr = consumerRecord.key()
+        val fnr = Fødselsnummer(consumerRecord.key())
         val søknad = consumerRecord.value()
         log.trace("WOHOO, fikk søknad $fnr -> $søknad")
         val id = joark.opprettJournalpost(
